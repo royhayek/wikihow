@@ -1,50 +1,43 @@
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  View,
-  ActivityIndicator,
-  Dimensions,
-  Text,
-} from 'react-native';
+import {ScrollView, View, FlatList} from 'react-native';
 
 // packages
 import {connect} from 'react-redux';
-import HTML from 'react-native-render-html';
 
 // theme
-import {COLORS} from '../../theme/color';
-import {styles, tagsStyles} from './style';
+import {styles} from './style';
 
 // actions
-import {getAboutScreenData} from './actions';
+import {getSearchResult} from './actions';
 import SafeArea from '../../components/SafeArea';
-
-const window = Dimensions.get('window');
+import HorizontalArticleListItem from './components/HorizontalArticleListItem';
 
 class index extends Component {
   componentDidMount() {
-    // this.props.getAboutScreenData();
+    const searchKeyword = this.props.route.params.searchKeyword;
+    this.props.getSearchResult(searchKeyword);
   }
 
   render() {
     console.log('this.props', this.props);
 
     return (
-      <SafeArea>
-        <ScrollView>
-          <View style={styles.container}>
-            <Text>Search</Text>
-          </View>
-        </ScrollView>
-      </SafeArea>
+      <View style={styles.container}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={this.props.articles}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={article => <HorizontalArticleListItem article={article.item} />}
+        />
+      </View>
     );
   }
 }
 
 const mapStateToProps = ({searchPageRed}) => {
   return {
-    // data: aboutPageRed.data,
-    // loadingScreen: aboutPageRed.loading_screen,
+    articles: searchPageRed.data,
+    loadingScreen: searchPageRed.loading_screen,
   };
 };
-export default connect(mapStateToProps, {getAboutScreenData})(index);
+export default connect(mapStateToProps, {getSearchResult})(index);

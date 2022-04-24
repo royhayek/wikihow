@@ -19,4 +19,5 @@ export const COLORS = {
   carbonGrey: '#5C5C5C',
   black: '#000000',
   darkGreen: '#222222',
+  lightGray: '#d2d8cd',
 };

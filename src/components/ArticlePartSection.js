@@ -17,11 +17,7 @@ const ArticlePartSection = ({method}) => {
       />
       <View style={styles.methodBodyContainer}>
         <Text style={styles.methodNumber}>{method.number}</Text>
-        <HTML
-          contentWidth={width}
-          source={{html: method.description}}
-          tagsStyles={tagsStyles}
-        />
+        <HTML contentWidth={width} source={{html: method.description}} tagsStyles={tagsStyles} />
       </View>
     </View>
   );
@@ -30,7 +26,7 @@ const ArticlePartSection = ({method}) => {
 const styles = StyleSheet.create({
   methodContainer: {
     width: '100%',
-    marginBottom: 20,
+    // marginBottom: 20,
     textAlign: 'center',
     position: 'relative',
     backgroundColor: 'white',

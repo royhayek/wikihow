@@ -31,9 +31,7 @@ class index extends Component {
             <Text style={styles.welcomeTitle}>
               Welcome to wikiHow, the most trusted how-to site on the internet.
             </Text>
-            <Text style={styles.welcomeSubtitle}>
-              What will you learn on wikihow today?
-            </Text>
+            <Text style={styles.welcomeSubtitle}>What will you learn on wikihow today?</Text>
             <FastImage
               style={styles.cover}
               source={{
@@ -43,16 +41,8 @@ class index extends Component {
           </View>
           <View style={styles.searchContainer}>
             <View style={styles.searchInputRow}>
-              <Icon
-                style={{alignSelf: 'center'}}
-                name="search"
-                size={22}
-                color="gray"
-              />
-              <TextInput
-                style={styles.searchInput}
-                placeholder="Search how to..."
-              />
+              <Icon style={{alignSelf: 'center'}} name="search" size={22} color="gray" />
+              <TextInput style={styles.searchInput} placeholder="Search how to..." />
             </View>
           </View>
 

@@ -1,21 +1,22 @@
 import * as RootNavigation from '../../navigators/RootNavigation';
 // import {USER_VALIDATE_URL} from '../../variables';
 import axios from 'axios';
-import {SETTINGS_URL} from '../../variables';
+import {SEARCH_ARTICLE_URL} from '../../variables';
 // import realm from 'models/';
 
-export const getAboutScreenData = () => {
+export const getSearchResult = searchKeyword => {
   console.log('actions called');
   return async dispatch => {
-    dispatch({type: 'about_screen_loading', payload: true});
+    dispatch({type: 'search_articles_loading', payload: true});
     try {
-      const result = await axios.get(SETTINGS_URL);
-      console.log('result of getAboutScreenData', result.data);
-      dispatch({type: 'about_screen_loading', payload: false});
-      dispatch({type: 'load_about_screen', payload: result.data});
+      console.log('searchKeyword', searchKeyword);
+      const result = await axios.get(SEARCH_ARTICLE_URL + `?keyword=${searchKeyword}`);
+      console.log('result of getSearchResult', result.data);
+      dispatch({type: 'search_articles_loading', payload: false});
+      dispatch({type: 'load_searched_articles', payload: result.data});
     } catch (error) {
-      console.log('getAboutScreenData', error);
-      dispatch({type: 'about_screen_loading', payload: false});
+      console.log('getSearchResult', error);
+      dispatch({type: 'search_articles_loading', payload: false});
     }
     // }
   };

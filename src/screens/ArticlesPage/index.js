@@ -45,17 +45,10 @@ class index extends Component {
                   style={styles.categorySearchInput}
                   placeholder="I want to learn how to..."
                 />
-                <Icon
-                  style={{alignSelf: 'center'}}
-                  name="search"
-                  size={15}
-                  color="gray"
-                />
+                <Icon style={{alignSelf: 'center'}} name="search" size={15} color="gray" />
               </View>
             </View>
-            <Text style={styles.categoryDescription}>
-              {category.description}
-            </Text>
+            <Text style={styles.categoryDescription}>{category.description}</Text>
 
             <SectionHeader text="Recent Articles" noIcon />
             <ArticleList articles={this.props.articles} />

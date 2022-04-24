@@ -1,9 +1,13 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../theme/color';
+import {fontSize} from '../../theme/fontSize';
 
 export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
+    backgroundColor: 'white',
+  },
+  whiteContainer: {
     backgroundColor: 'white',
   },
   updatedDate: {
@@ -78,12 +82,43 @@ export const styles = StyleSheet.create({
   partsContainerHeader: {
     flexDirection: 'row',
   },
+  aboutThisArticleText: {
+    fontSize: fontSize.size20,
+    padding: 16,
+    fontWeight: 'bold',
+    color: '#222222',
+  },
+  backgroundVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
 });
 
 export const tagsStyles = {
   body: {
-    fontSize: 18,
+    fontSize: fontSize.size17,
     color: '#545454',
     lineHeight: 26,
+  },
+};
+
+export const tipsStyles = {
+  body: {
+    fontSize: fontSize.size16,
+    color: '#545454',
+    lineHeight: 25,
+    paddingRight: 20,
+  },
+};
+
+export const aticleInfoStyles = {
+  body: {
+    fontSize: fontSize.size15,
+    color: '#545454',
+    lineHeight: 21,
+    paddingRight: 20,
   },
 };

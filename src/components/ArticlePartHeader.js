@@ -10,7 +10,7 @@ const ArticlePartHeader = ({part, count}) => {
         <View style={styles.partNumberContainer}>
           <Text style={styles.partNumberText}>{part.part}</Text>
         </View>
-        <View>
+        <View style={{flex: 1, justifyContent: 'center'}}>
           <Text style={styles.methodPart}>
             Part {part.part} of {count}:
           </Text>
@@ -23,7 +23,7 @@ const ArticlePartHeader = ({part, count}) => {
 
 const styles = StyleSheet.create({
   partsContainer: {
-    width: '100%',
+    flex: 1,
     marginTop: 20,
     position: 'relative',
     backgroundColor: 'white',
@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   methodPart: {
-    fontSize: 16,
+    fontSize: 17,
     color: COLORS.darkGreen,
   },
   methodtitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: COLORS.darkGreen,
     width: '90%',

@@ -63,6 +63,9 @@ class DrawerContent extends React.Component {
       case 'home':
         this.props.navigation.navigate('HomeScreen', {screen: 'Home'});
         break;
+      case 'random':
+        this.props.navigation.navigate('RandomArticleScreen');
+        break;
       case 'categories':
         this.props.navigation.navigate('CategoriesScreen');
         break;

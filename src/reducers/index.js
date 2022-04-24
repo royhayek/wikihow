@@ -7,6 +7,8 @@ import aboutPageReducer from '../screens/AboutPage/reducer';
 import articlesPageReducer from '../screens/ArticlesPage/reducer';
 import articleDetailsPageReducer from '../screens/ArticleDetailsPage/reducer';
 import authorProfilePageReducer from '../screens/AuthorProfilePage/reducer';
+import randomArticlePageReducer from '../screens/RandomArticlePage/reducer';
+import searchPageReducer from '../screens/SearchPage/reducer';
 
 export default combineReducers({
   mainNavigationRed: mainNavigationReducer,
@@ -16,4 +18,6 @@ export default combineReducers({
   articlesPageRed: articlesPageReducer,
   articleDetailsPageRed: articleDetailsPageReducer,
   authorProfilePageRed: authorProfilePageReducer,
+  randomArticlePageRed: randomArticlePageReducer,
+  searchPageRed: searchPageReducer,
 });
