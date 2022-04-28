@@ -1,74 +1,112 @@
 import React, {Component} from 'react';
-import {Text, View, Image, TextInput, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 
 // packages
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 // components
-import ArticleList from '../../components/ArticleList';
-import SafeArea from '../../components/SafeArea';
 import SectionHeader from '../../components/SectionHeader';
+import ArticleListItem from '../../components/ArticleListItem';
+import Loader from '../../components/Loader';
 
 // theme
 import styles from './style';
+import {COLORS} from '../../theme/color';
 
 //actions
-import {getCategoryArticles, navigateTo_ArticleScreen} from './actions';
+import {getCategoryArticles} from './actions';
+import {showSearchBar, setSearchKeyword} from '../../navigators/actions';
+
+// variables
+import {URI} from '../../variables';
+
+// navigation
+import * as RootNavigation from '../../navigators/RootNavigation';
 
 class index extends Component {
   componentDidMount() {
-    const categoryId = this.props.route.params.category.item.id;
-    this.props.getCategoryArticles(categoryId);
+    this.props.navigation.addListener('focus', () => {
+      const categoryId = this.props.route.params.category.item.id;
+      this.props.getCategoryArticles(categoryId);
+    });
   }
-
-  goToArticleScreen = article => {
-    this.props.navigateTo_ArticleScreen('Article', {article});
-  };
 
   render() {
     const category = this.props.route.params.category.item;
     return (
-      <SafeArea>
-        <ScrollView>
-          <View style={styles.container}>
-            <View style={styles.categoryInfo}>
-              <Image
-                style={styles.categoryCover}
-                source={{
-                  uri: 'https://www.wikihow.com/extensions/wikihow/categories/images/Categories_Header_Arts.jpg',
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.categoryInfo}>
+            <Image
+              style={styles.categoryCover}
+              source={{uri: URI + '/uploads/categories/thumbnails/' + category.thumbnail}}
+            />
+            <Text style={styles.categoryName}>{category.name}</Text>
+            <View style={styles.categorySearchContainer}>
+              <TextInput
+                selectionColor={COLORS.olivine2}
+                style={styles.categorySearchInput}
+                placeholder="I want to learn how to..."
+                onChangeText={text => this.props.setSearchKeyword(text)}
+                onSubmitEditing={() => {
+                  RootNavigation.navigate('SearchPage', {
+                    searchKeyword: this.props.searchKeyword,
+                  });
+                  this.props.showSearchBar();
                 }}
               />
-              <Text style={styles.categoryName}>{category.name}</Text>
-              <View style={styles.categorySearchContainer}>
-                <TextInput
-                  style={styles.categorySearchInput}
-                  placeholder="I want to learn how to..."
-                />
-                <Icon style={{alignSelf: 'center'}} name="search" size={15} color="gray" />
-              </View>
+              <TouchableOpacity
+                style={styles.alignSelfCenter}
+                onPress={() => {
+                  RootNavigation.navigate('SearchPage', {
+                    searchKeyword: this.props.searchKeyword,
+                  });
+                  this.props.showSearchBar();
+                }}>
+                <Icon name="search" size={16} color="gray" />
+              </TouchableOpacity>
             </View>
-            <Text style={styles.categoryDescription}>{category.description}</Text>
-
-            <SectionHeader text="Recent Articles" noIcon />
-            <ArticleList articles={this.props.articles} />
-
-            <SectionHeader text="Featured Articles" noIcon />
-            <ArticleList articles={this.props.articles} />
           </View>
-        </ScrollView>
-      </SafeArea>
+          <Text style={styles.categoryDescription}>{category.description}</Text>
+          <SectionHeader text="Articles" noIcon />
+          {this.props.loading ? (
+            <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
+          ) : (
+            <View style={styles.wrapListContainer}>
+              {this.props.articles.length > 0 ? (
+                this.props.articles.map(article => (
+                  <ArticleListItem key={article.id} article={article} />
+                ))
+              ) : (
+                <View style={styles.noArticlesContainer}>
+                  <Text>No articles added yet</Text>
+                </View>
+              )}
+            </View>
+          )}
+        </View>
+      </ScrollView>
     );
   }
 }
 
-function mapStateToProps({articlesPageRed}) {
+function mapStateToProps({articlesPageRed, mainNavigationRed}) {
   return {
     articles: articlesPageRed.data,
+    loading: articlesPageRed.loading_screen,
+    searchKeyword: mainNavigationRed.searchKeyword,
   };
 }
 
-export default connect(mapStateToProps, {
-  getCategoryArticles,
-  navigateTo_ArticleScreen,
-})(index);
+export default connect(mapStateToProps, {getCategoryArticles, setSearchKeyword, showSearchBar})(
+  index,
+);

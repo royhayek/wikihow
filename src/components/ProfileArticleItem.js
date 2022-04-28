@@ -1,19 +1,11 @@
 import React from 'react';
-import {
-  Text,
-  Image,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-  TouchableOpacity,
-} from 'react-native';
-import {DOMAIN} from '../api/ApiList';
+import {Text, View, StyleSheet, useWindowDimensions, TouchableOpacity} from 'react-native';
 import HTML from 'react-native-render-html';
-import {Divider, NativeBaseProvider} from 'native-base';
 import {COLORS} from '../theme/color';
 import {URI} from '../variables';
 import FastImage from 'react-native-fast-image';
 import * as RootNavigation from '../navigators/RootNavigation';
+import {mvs} from 'react-native-size-matters';
 
 const ProfileArticleItem = ({article}) => {
   const {width} = useWindowDimensions();
@@ -21,32 +13,20 @@ const ProfileArticleItem = ({article}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        onPress={() =>
-          RootNavigation.push('ArticleDetails', {articleId: article.id})
-        }>
+        onPress={() => RootNavigation.push('ArticleDetails', {articleId: article.id})}>
         <View style={styles.headerContainer}>
           <FastImage
             style={styles.image}
             source={{uri: URI + '/uploads/articles/' + article.image}}
           />
-          <View style={{flexDirection: 'column'}}>
+          <View style={{flexDirection: 'column', flex: 1}}>
             <Text style={styles.howTo}>How To</Text>
             <Text style={styles.title}>{article.title}</Text>
           </View>
         </View>
       </TouchableOpacity>
-      <HTML
-        contentWidth={width}
-        source={{html: article.description}}
-        tagsStyles={tagsStyles}
-      />
-      <NativeBaseProvider>
-        <Divider
-          style={styles.divider}
-          bgColor={COLORS.vampireGrey}
-          thickness={0.5}
-        />
-      </NativeBaseProvider>
+      <HTML contentWidth={width} source={{html: article.description}} tagsStyles={tagsStyles} />
+      <View style={styles.divider} bgColor={COLORS.vampireGrey} thickness={0.5} />
     </View>
   );
 };
@@ -74,20 +54,19 @@ const styles = StyleSheet.create({
     fontSize: 13,
     lineHeight: 13,
     marginBottom: 2,
-    flexBasis: '50%',
   },
   title: {
+    flex: 1,
     color: 'green',
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
     lineHeight: 22,
-    width: '60%',
-    flexBasis: '50%',
   },
   divider: {
     marginVertical: 20,
-    color: 'black',
+    backgroundColor: COLORS.vampireGrey,
+    height: mvs(0.5),
   },
 });
 

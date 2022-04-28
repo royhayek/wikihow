@@ -1,22 +1,10 @@
-import React, {Component, useState} from 'react';
-import {
-  Text,
-  View,
-  Image,
-  Dimensions,
-  StatusBar,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import React, {Component} from 'react';
+import {StatusBar, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {connect} from 'react-redux';
 import DrawerContent from './DrawerContent';
 
-import {
-  SafeAreaProvider,
-  initialWindowMetrics,
-} from 'react-native-safe-area-context';
+import {SafeAreaProvider, initialWindowMetrics} from 'react-native-safe-area-context';
 
 //// Screens
 import HomePage from '../screens/HomePage';
@@ -26,7 +14,7 @@ import ArticleDetailsPage from '../screens/ArticleDetailsPage';
 import AboutPage from '../screens/AboutPage';
 import AuthorProfilePage from '../screens/AuthorProfilePage';
 import SearchPage from '../screens/SearchPage';
-import RandomArticlePage from '../screens/RandomArticlePage';
+import BookmarksPage from '../screens/BookmarksPage';
 
 // import {check_authentication} from './actions';
 import {COLORS} from '../theme/color';
@@ -34,20 +22,17 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {toggleSearchBar} from './actions';
+import {showSearchBar, hideSearchBar, setSearchKeyword} from './actions';
 import FastImage from 'react-native-fast-image';
 import SearchBar from '../components/SearchBar';
 
 import * as RootNavigation from './RootNavigation';
 
-const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
-const AppStack = createStackNavigator();
 const HomeStack = createStackNavigator();
-const RandomArticleStack = createStackNavigator();
 const CategoriesStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
+const BookmarksStack = createStackNavigator();
 
 //-----------------------------------------------//
 //          this is the home stack
@@ -76,6 +61,7 @@ const HomeStackScreen = () => {
           backgroundColor: COLORS.white,
           headerTitleAlign: 'left',
           headerBackTitleVisible: false,
+          unmountOnBlur: true,
         })}
       />
       <HomeStack.Screen
@@ -116,25 +102,6 @@ const HomeStackScreen = () => {
   // }
 };
 
-const RandomArticleStackScreen = () => {
-  return (
-    <RandomArticleStack.Navigator>
-      <RandomArticleStack.Screen
-        name="RandomArticle"
-        component={RandomArticlePage}
-        options={({route, navigation}) => ({
-          headerShown: false,
-          headerTintColor: COLORS.black,
-          backgroundColor: COLORS.headerColor,
-          headerTitleAlign: 'left',
-          headerBackTitleVisible: false,
-        })}
-      />
-    </RandomArticleStack.Navigator>
-  );
-  // }
-};
-
 const CategoriesStackScreen = () => {
   return (
     <CategoriesStack.Navigator>
@@ -153,6 +120,26 @@ const CategoriesStackScreen = () => {
   );
   // }
 };
+
+const BookmarksStackScreen = () => {
+  return (
+    <BookmarksStack.Navigator>
+      <CategoriesStack.Screen
+        name="Bookmarks"
+        component={BookmarksPage}
+        options={({route, navigation}) => ({
+          headerShown: false,
+          headerTintColor: COLORS.black,
+          backgroundColor: COLORS.headerColor,
+          headerTitleAlign: 'left',
+          headerBackTitleVisible: false,
+        })}
+      />
+    </BookmarksStack.Navigator>
+  );
+  // }
+};
+
 const SettingsStackScreen = () => {
   return (
     <SettingsStack.Navigator>
@@ -199,31 +186,21 @@ const SettingsStackScreen = () => {
 };
 
 class AppContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchKeyword: '',
-    };
-  }
-
   render() {
-    console.log('searchBarShown', this.props.searchBarShown);
-
     return (
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <StatusBar barStyle="light-content" backgroundColor={COLORS.olivine2} />
         <Drawer.Navigator
           drawerContent={props => <DrawerContent {...props} />}
-          screenOptions={{
+          screenOptions={({route}) => ({
             headerTitle: props =>
               this.props.searchBarShown ? (
                 <SearchBar
-                  onSearchTextChange={text =>
-                    this.setState({searchKeyword: text})
-                  }
+                  value={this.props.searchKeyword}
+                  onSearchTextChange={text => this.props.setSearchKeyword(text)}
                   onSearchSubmit={() =>
                     RootNavigation.navigate('SearchPage', {
-                      searchKeyword: this.state.searchKeyword,
+                      searchKeyword: this.props.searchKeyword,
                     })
                   }
                 />
@@ -242,26 +219,30 @@ class AppContainer extends Component {
               this.props.searchBarShown ? (
                 <TouchableOpacity
                   style={{marginRight: 20}}
-                  onPress={() => this.props.toggleSearchBar()}>
-                  <FontAwesome name="close" size={18} color="white" />
+                  onPress={() => {
+                    this.props.hideSearchBar();
+                    this.props.setSearchKeyword('');
+                  }}>
+                  <FontAwesome name="close" size={20} color="white" />
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity
                   style={{marginRight: 20}}
-                  onPress={() => this.props.toggleSearchBar()}>
+                  onPress={() => this.props.showSearchBar()}>
                   <FontAwesome5 name="search" size={18} color="white" />
                 </TouchableOpacity>
               ),
-          }}>
+          })}>
           <Drawer.Screen name="HomeScreen" component={HomeStackScreen} />
-          <Drawer.Screen
-            name="RandomArticleScreen"
-            component={RandomArticleStackScreen}
-            options={{unmountOnBlur: true}}
-          />
           <Drawer.Screen
             name="CategoriesScreen"
             component={CategoriesStackScreen}
+            options={{unmountOnBlur: true}}
+          />
+          <Drawer.Screen
+            name="BookmarksScreen"
+            component={BookmarksStackScreen}
+            options={{unmountOnBlur: true}}
           />
           <Drawer.Screen name="AboutScreen" component={SettingsStackScreen} />
         </Drawer.Navigator>
@@ -273,7 +254,10 @@ class AppContainer extends Component {
 const mapStateToProps = ({mainNavigationRed}) => {
   return {
     searchBarShown: mainNavigationRed.searchBarShown,
+    searchKeyword: mainNavigationRed.searchKeyword,
   };
 };
 
-export default connect(mapStateToProps, {toggleSearchBar})(AppContainer);
+export default connect(mapStateToProps, {showSearchBar, hideSearchBar, setSearchKeyword})(
+  AppContainer,
+);

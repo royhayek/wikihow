@@ -14,7 +14,7 @@ export default (state = INITIAL_STATE, action) => {
     case 'about_screen_loading':
       return {...state, loading_screen: action.payload};
 
-    //b7otta bi kel wahde la fadde kell l reducers on logout
+    
     case 'logout_reset_reducers':
       return {...state, data: [], loading_screen: false};
 

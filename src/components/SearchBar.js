@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Platform,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  TextInput,
-  View,
-} from 'react-native';
+import {Platform, StyleSheet, SafeAreaView, StatusBar, TextInput, View} from 'react-native';
 
 import {connect} from 'react-redux';
 
@@ -25,6 +18,7 @@ class SearchBar extends Component {
       <View style={styles.searchBarContainer}>
         <FontAwesome5 name="search" size={18} color="white" />
         <TextInput
+          value={this.props.value}
           style={styles.searchTextInput}
           selectionColor="white"
           placeholder="Search here...."

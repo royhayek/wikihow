@@ -5,7 +5,7 @@ import {fontSize} from '../../theme/fontSize';
 
 export default StyleSheet.create({
   mainContainer: {
-    flex: 1,
+    backgroundColor: COLORS.white,
   },
   container: {
     height: mvs(220),
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     fontSize: 26,
     textAlign: 'left',
     color: COLORS.blackCow,
-    paddingTop: 15,
+    paddingTop: 25,
     fontWeight: 'bold',
     marginBottom: 15,
   },
@@ -55,5 +55,14 @@ export default StyleSheet.create({
     paddingVertical: mvs(10),
     fontSize: fontSize.size19,
     color: COLORS.cloudGrey,
+  },
+  articleWrapList: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: ms(5),
+  },
+  loaderStyle: {
+    width: '100%',
+    paddingVertical: mvs(50),
   },
 });

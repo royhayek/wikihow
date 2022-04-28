@@ -5,6 +5,7 @@ import {DrawerMenuButton} from '../components/DrawerMenuButton';
 import {name as appName} from '../../app.json';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {COLORS} from '../theme/color';
+import * as RootNavigation from './RootNavigation';
 
 const drawerMenuList = [
   {
@@ -64,15 +65,18 @@ class DrawerContent extends React.Component {
         this.props.navigation.navigate('HomeScreen', {screen: 'Home'});
         break;
       case 'random':
-        this.props.navigation.navigate('RandomArticleScreen');
+        this.props.navigation.navigate('ArticleDetails', {isRandom: true});
         break;
       case 'categories':
         this.props.navigation.navigate('CategoriesScreen');
         break;
+      case 'bookmarks':
+        this.props.navigation.navigate('BookmarksScreen');
+        // RootNavigation.reset(0, 'BookmarksScreen');
+        break;
       case 'about':
         this.props.navigation.navigate('AboutScreen');
         break;
-
       default:
     }
   }

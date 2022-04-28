@@ -8,6 +8,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  noArticlesText: {
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export const tagsStyles = {

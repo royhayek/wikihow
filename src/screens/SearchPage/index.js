@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, View, FlatList} from 'react-native';
+import {View, FlatList, Text, RefreshControl} from 'react-native';
 
 // packages
 import {connect} from 'react-redux';
@@ -9,26 +9,55 @@ import {styles} from './style';
 
 // actions
 import {getSearchResult} from './actions';
-import SafeArea from '../../components/SafeArea';
-import HorizontalArticleListItem from './components/HorizontalArticleListItem';
+import HorizontalArticleListItem from '../../components/HorizontalArticleListItem';
+import Loader from '../../components/Loader';
 
 class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   componentDidMount() {
     const searchKeyword = this.props.route.params.searchKeyword;
     this.props.getSearchResult(searchKeyword);
   }
 
-  render() {
-    console.log('this.props', this.props);
+  componentDidUpdate(prevProps, prevState) {
+    const searchKeyword = this.props.route.params.searchKeyword;
+    if (prevProps.route.params.searchKeyword !== searchKeyword) {
+      this.props.getSearchResult(searchKeyword);
+    }
+  }
 
+  onRefresh = () => {
+    const searchKeyword = this.props.route.params.searchKeyword;
+    this.setState({refreshing: true});
+    this.props.getSearchResult(searchKeyword).then(() => this.setState({refreshing: false}));
+  };
+
+  render() {
     return (
       <View style={styles.container}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={this.props.articles}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={article => <HorizontalArticleListItem article={article.item} />}
-        />
+        {this.props.loading ? (
+          <Loader />
+        ) : this.props.articles.length > 0 ? (
+          <FlatList
+            refreshControl={
+              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+            }
+            showsVerticalScrollIndicator={false}
+            data={this.props.articles}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={article => <HorizontalArticleListItem article={article.item} />}
+          />
+        ) : (
+          <View style={styles.noArticlesText}>
+            <Text>No articles found</Text>
+          </View>
+        )}
       </View>
     );
   }
@@ -37,7 +66,7 @@ class index extends Component {
 const mapStateToProps = ({searchPageRed}) => {
   return {
     articles: searchPageRed.data,
-    loadingScreen: searchPageRed.loading_screen,
+    loading: searchPageRed.loading_screen,
   };
 };
 export default connect(mapStateToProps, {getSearchResult})(index);

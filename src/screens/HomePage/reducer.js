@@ -1,17 +1,23 @@
 const INITIAL_STATE = {
   key: 0,
-  data: [],
+  recentArticles: [],
   loading_screen: false,
   message: '',
-  featuredDesigners: [],
+  featuredArticles: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case 'load_home_screen':
-      return {...state, data: action.payload};
+      return {
+        ...state,
+        recentArticles: action.recentArticles,
+        featuredArticles: action.featuredArticles,
+      };
 
-    //b7otta bi kel wahde la fadde kell l reducers on logout
+    case 'home_screen_loading':
+      return {...state, loading_screen: action.payload};
+
     case 'logout_reset_reducers':
       return {...state, data: [], loading_screen: false};
 

@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginRight: ms(10),
-    width: ms(40),
-    height: ms(40),
+    width: ms(38),
+    height: ms(38),
   },
   text: {
     flex: 1,

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {mvs} from 'react-native-size-matters';
 import {COLORS} from '../../theme/color';
 
 export const styles = StyleSheet.create({
@@ -49,7 +50,8 @@ export const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 20,
-    color: 'black',
+    backgroundColor: COLORS.vampireGrey,
+    height: mvs(0.5),
   },
   articlesHeader: {
     color: COLORS.vampireGrey,

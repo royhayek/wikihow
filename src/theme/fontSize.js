@@ -26,4 +26,6 @@ export const fontSize = {
   size30: isIOS ? moderateScale(30) : moderateScale(28),
   size31: isIOS ? moderateScale(31) : moderateScale(29),
   size32: isIOS ? moderateScale(32) : moderateScale(30),
+  size38: isIOS ? moderateScale(38) : moderateScale(36),
+  size40: isIOS ? moderateScale(40) : moderateScale(38),
 };

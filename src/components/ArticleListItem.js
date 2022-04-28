@@ -8,30 +8,38 @@ import {URI} from '../variables';
 
 const ArticleListItem = ({article}) => {
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => {
-        RootNavigation.navigate('ArticleDetails', {articleId: article.id});
-      }}>
-      <Image
-        style={styles.imageThumbnail}
-        source={{uri: URI + '/uploads/articles/' + article.image}}
-      />
-      <View style={styles.informationText}>
-        <Text style={{fontSize: 11, color: COLORS.granite}}>How To</Text>
-        <Text style={styles.titleText}>{article.title}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.mainContainer}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          RootNavigation.navigate('ArticleDetails', {articleId: article.id});
+        }}>
+        <Image
+          style={styles.imageThumbnail}
+          source={{uri: URI + '/uploads/articles/' + article.image}}
+        />
+        <View style={styles.informationText}>
+          <Text style={{fontSize: 11, color: COLORS.granite}}>How To</Text>
+          <Text style={styles.titleText} numberOfLines={2}>
+            {article.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    width: '50%',
+  },
   container: {
-    width: ms(180),
-    margin: ms(2),
+    marginRight: ms(5),
+    marginBottom: ms(5),
     borderColor: COLORS.gainsboro,
     borderWidth: ms(1),
     borderRadius: 5,
+    height: mvs(190),
   },
   imageThumbnail: {
     justifyContent: 'center',

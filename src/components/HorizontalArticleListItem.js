@@ -1,11 +1,10 @@
-import {Divider, NativeBaseProvider} from 'native-base';
 import React from 'react';
 import {Text, Image, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {ms, mvs} from 'react-native-size-matters';
-import * as RootNavigation from '../../../navigators/RootNavigation';
-import {COLORS} from '../../../theme/color';
-import {fontSize} from '../../../theme/fontSize';
-import {URI} from '../../../variables';
+import * as RootNavigation from '../navigators/RootNavigation';
+import {COLORS} from '../theme/color';
+import {fontSize} from '../theme/fontSize';
+import {URI} from '../variables';
 import TimeAgo from 'react-native-timeago';
 import Entypo from 'react-native-vector-icons/Entypo';
 
@@ -22,7 +21,9 @@ const HorizontalArticleListItem = ({article}) => {
           source={{uri: URI + '/uploads/articles/' + article.image}}
         />
         <View style={styles.informationText}>
-          <Text style={styles.titleText}>{article.title}</Text>
+          <Text style={styles.titleText} numberOfLines={2}>
+            {article.title}
+          </Text>
           <View style={styles.divider} />
           <View style={{flexDirection: 'row', paddingHorizontal: ms(5)}}>
             <Entypo name="eye" size={15} color={COLORS.lightGray} />
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGray,
   },
   informationText: {
+    flex: 1,
     paddingTop: mvs(10),
     paddingBottom: mvs(5),
   },

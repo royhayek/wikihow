@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {mvs} from 'react-native-size-matters';
 import {COLORS} from '../../theme/color';
 import {fontSize} from '../../theme/fontSize';
 
@@ -6,6 +7,11 @@ export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     backgroundColor: 'white',
+  },
+  titleAndActionBtnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 15,
   },
   whiteContainer: {
     backgroundColor: 'white',
@@ -38,7 +44,6 @@ export const styles = StyleSheet.create({
     fontSize: 25,
     color: '#222222',
     fontWeight: 'bold',
-    marginTop: 15,
   },
   publisherContainer: {flexDirection: 'row'},
   publishedByText: {
@@ -88,20 +93,88 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#222222',
   },
-  backgroundVideo: {
+  articleVideoContainer: {
+    flex: 1,
+    height: mvs(200),
+    backgroundColor: 'black',
+  },
+  articleVideo: {
     position: 'absolute',
     top: 0,
-    left: 0,
     bottom: 0,
+    left: 0,
     right: 0,
+  },
+  authorInfoContainer: {
+    paddingVertical: 15,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: COLORS.aquaHaze,
+  },
+  authorAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+  },
+  authoredByContainer: {
+    marginLeft: 15,
+    justifyContent: 'center',
+  },
+  authoredByText: {
+    fontSize: fontSize.size14,
+    color: '#545454',
+    fontWeight: 'bold',
+  },
+  additionalInfoContainer: {
+    borderBottomWidth: 1,
+    borderColor: '#f3f3f3',
+    paddingVertical: 10,
+  },
+  additionalInfoText: {
+    fontSize: fontSize.size15,
+    color: '#545454',
+  },
+  additionalInfoValueText: {
+    flex: 1,
+    fontSize: fontSize.size15,
+    color: '#545454',
+    fontWeight: 'bold',
+  },
+  rowContainer: {
+    flexDirection: 'row',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    margin: 15,
+    backgroundColor: 'white',
+    padding: 25,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  videoTranscriptBtn: {
+    backgroundColor: COLORS.olivine2,
+    paddingVertical: mvs(6),
+    paddingHorizontal: mvs(10),
+    borderRadius: 4,
   },
 });
 
 export const tagsStyles = {
   body: {
-    fontSize: fontSize.size17,
+    fontSize: fontSize.size16,
     color: '#545454',
-    lineHeight: 26,
+    lineHeight: 25,
   },
 };
 
@@ -110,15 +183,45 @@ export const tipsStyles = {
     fontSize: fontSize.size16,
     color: '#545454',
     lineHeight: 25,
+    paddingLeft: 10,
     paddingRight: 20,
   },
 };
 
-export const aticleInfoStyles = {
+export const articleInfoStyles = {
   body: {
     fontSize: fontSize.size15,
     color: '#545454',
     lineHeight: 21,
+    paddingLeft: 10,
+    paddingRight: 20,
+  },
+};
+
+export const videoTranscriptStyles = {
+  body: {
+    fontSize: fontSize.size15,
+    color: '#545454',
+    lineHeight: 21,
+  },
+};
+
+export const referencesStyles = {
+  body: {
+    fontSize: fontSize.size15,
+    color: '#545454',
+    lineHeight: 24,
+    paddingLeft: 10,
+    paddingRight: 20,
+  },
+};
+
+export const warningsStyles = {
+  body: {
+    fontSize: fontSize.size16,
+    color: '#545454',
+    lineHeight: 25,
+    paddingLeft: 10,
     paddingRight: 20,
   },
 };

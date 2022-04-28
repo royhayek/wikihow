@@ -26,7 +26,7 @@ const ArticlePartSection = ({method}) => {
 const styles = StyleSheet.create({
   methodContainer: {
     width: '100%',
-    // marginBottom: 20,
+    paddingBottom: 20,
     textAlign: 'center',
     position: 'relative',
     backgroundColor: 'white',
