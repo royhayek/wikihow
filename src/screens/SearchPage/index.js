@@ -1,22 +1,24 @@
-import React, {Component} from 'react';
-import {View, FlatList, Text, RefreshControl} from 'react-native';
+import React, { Component } from 'react';
+import { View, FlatList, Text, RefreshControl } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 // theme
-import {styles} from './style';
+import { styles } from './style';
 
 // actions
-import {getSearchResult} from './actions';
+import { getSearchResult } from './actions';
 import HorizontalArticleListItem from '../../components/HorizontalArticleListItem';
 import Loader from '../../components/Loader';
+import { t } from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: false,
+      refreshing: false
     };
   }
 
@@ -34,11 +36,12 @@ class index extends Component {
 
   onRefresh = () => {
     const searchKeyword = this.props.route.params.searchKeyword;
-    this.setState({refreshing: true});
-    this.props.getSearchResult(searchKeyword).then(() => this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    this.props.getSearchResult(searchKeyword).then(() => this.setState({ refreshing: false }));
   };
 
   render() {
+    const { t } = this.props;
     return (
       <View style={styles.container}>
         {this.props.loading ? (
@@ -51,11 +54,11 @@ class index extends Component {
             showsVerticalScrollIndicator={false}
             data={this.props.articles}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={article => <HorizontalArticleListItem article={article.item} />}
+            renderItem={(article) => <HorizontalArticleListItem article={article.item} />}
           />
         ) : (
           <View style={styles.noArticlesText}>
-            <Text>No articles found</Text>
+            <Text>{t('NO_ARTICLES_FOUND')}</Text>
           </View>
         )}
       </View>
@@ -63,10 +66,10 @@ class index extends Component {
   }
 }
 
-const mapStateToProps = ({searchPageRed}) => {
+const mapStateToProps = ({ searchPageRed }) => {
   return {
     articles: searchPageRed.data,
-    loading: searchPageRed.loading_screen,
+    loading: searchPageRed.loading_screen
   };
 };
-export default connect(mapStateToProps, {getSearchResult})(index);
+export default connect(mapStateToProps, { getSearchResult })(withTranslation()(index));

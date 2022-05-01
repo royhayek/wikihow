@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -6,11 +6,11 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator,
+  ActivityIndicator
 } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 // components
@@ -20,17 +20,19 @@ import Loader from '../../components/Loader';
 
 // theme
 import styles from './style';
-import {COLORS} from '../../theme/color';
+import { COLORS } from '../../theme/color';
 
 //actions
-import {getCategoryArticles} from './actions';
-import {showSearchBar, setSearchKeyword} from '../../navigators/actions';
+import { getCategoryArticles } from './actions';
+import { showSearchBar, setSearchKeyword } from '../../navigators/actions';
 
 // variables
-import {URI} from '../../variables';
+import { URI } from '../../variables';
 
 // navigation
 import * as RootNavigation from '../../navigators/RootNavigation';
+import { t } from 'i18next';
+import { withTranslation } from 'react-i18next';
 
 class index extends Component {
   componentDidMount() {
@@ -48,18 +50,18 @@ class index extends Component {
           <View style={styles.categoryInfo}>
             <Image
               style={styles.categoryCover}
-              source={{uri: URI + '/uploads/categories/thumbnails/' + category.thumbnail}}
+              source={{ uri: URI + '/uploads/categories/thumbnails/' + category.thumbnail }}
             />
             <Text style={styles.categoryName}>{category.name}</Text>
             <View style={styles.categorySearchContainer}>
               <TextInput
                 selectionColor={COLORS.olivine2}
                 style={styles.categorySearchInput}
-                placeholder="I want to learn how to..."
-                onChangeText={text => this.props.setSearchKeyword(text)}
+                placeholder={t('I_WANT_TO_LEARN_HOW_TO')}
+                onChangeText={(text) => this.props.setSearchKeyword(text)}
                 onSubmitEditing={() => {
                   RootNavigation.navigate('SearchPage', {
-                    searchKeyword: this.props.searchKeyword,
+                    searchKeyword: this.props.searchKeyword
                   });
                   this.props.showSearchBar();
                 }}
@@ -68,7 +70,7 @@ class index extends Component {
                 style={styles.alignSelfCenter}
                 onPress={() => {
                   RootNavigation.navigate('SearchPage', {
-                    searchKeyword: this.props.searchKeyword,
+                    searchKeyword: this.props.searchKeyword
                   });
                   this.props.showSearchBar();
                 }}>
@@ -77,18 +79,18 @@ class index extends Component {
             </View>
           </View>
           <Text style={styles.categoryDescription}>{category.description}</Text>
-          <SectionHeader text="Articles" noIcon />
+          <SectionHeader text={t('ARTICLES')} noIcon />
           {this.props.loading ? (
             <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
           ) : (
             <View style={styles.wrapListContainer}>
               {this.props.articles.length > 0 ? (
-                this.props.articles.map(article => (
+                this.props.articles.map((article) => (
                   <ArticleListItem key={article.id} article={article} />
                 ))
               ) : (
                 <View style={styles.noArticlesContainer}>
-                  <Text>No articles added yet</Text>
+                  <Text>{t('NO_ARTICLES_FOUND')}</Text>
                 </View>
               )}
             </View>
@@ -99,14 +101,14 @@ class index extends Component {
   }
 }
 
-function mapStateToProps({articlesPageRed, mainNavigationRed}) {
+function mapStateToProps({ articlesPageRed, mainNavigationRed }) {
   return {
     articles: articlesPageRed.data,
     loading: articlesPageRed.loading_screen,
-    searchKeyword: mainNavigationRed.searchKeyword,
+    searchKeyword: mainNavigationRed.searchKeyword
   };
 }
 
-export default connect(mapStateToProps, {getCategoryArticles, setSearchKeyword, showSearchBar})(
-  index,
+export default connect(mapStateToProps, { getCategoryArticles, setSearchKeyword, showSearchBar })(
+  withTranslation()(index)
 );

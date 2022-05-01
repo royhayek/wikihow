@@ -1,24 +1,25 @@
-import React, {Component} from 'react';
-import {View, FlatList, Text, RefreshControl} from 'react-native';
+import React, { Component } from 'react';
+import { View, FlatList, Text, RefreshControl } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 // theme
 import styles from './style';
 
 // actions
-import {getBookmarkedArticles} from './actions';
+import { getBookmarkedArticles } from './actions';
 
 // components
 import Loader from '../../components/Loader';
 import HorizontalArticleListItem from '../../components/HorizontalArticleListItem';
+import { withTranslation } from 'react-i18next';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: false,
+      refreshing: false
     };
   }
 
@@ -27,11 +28,12 @@ class index extends Component {
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    this.props.getBookmarkedArticles().then(() => this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    this.props.getBookmarkedArticles().then(() => this.setState({ refreshing: false }));
   };
 
   render() {
+    const { t } = this.props;
     return (
       <View>
         {this.props.loadingScreen ? (
@@ -44,11 +46,11 @@ class index extends Component {
             style={styles.articlesList}
             data={this.props.articles}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={article => <HorizontalArticleListItem article={article.item} />}
+            renderItem={(article) => <HorizontalArticleListItem article={article.item} />}
           />
         ) : (
           <View style={styles.noBookmarksText}>
-            <Text>You don't have any bookmarks</Text>
+            <Text>{t('NO_BOOKMARKS_FOUND')}</Text>
           </View>
         )}
       </View>
@@ -56,11 +58,11 @@ class index extends Component {
   }
 }
 
-function mapStateToProps({bookmarksPageRed}) {
+function mapStateToProps({ bookmarksPageRed }) {
   return {
     articles: bookmarksPageRed.data,
-    loadingScreen: bookmarksPageRed.loading_screen,
+    loadingScreen: bookmarksPageRed.loading_screen
   };
 }
 
-export default connect(mapStateToProps, {getBookmarkedArticles})(index);
+export default connect(mapStateToProps, { getBookmarkedArticles })(withTranslation()(index));

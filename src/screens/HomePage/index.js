@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Text, View, ScrollView, TextInput, ActivityIndicator, RefreshControl} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, ScrollView, TextInput, ActivityIndicator, RefreshControl } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -13,21 +13,22 @@ import ArticleListItem from '../../components/ArticleListItem';
 
 // theme
 import styles from './style';
-import {COLORS} from '../../theme/color';
+import { COLORS } from '../../theme/color';
 
 // actions
-import {getHomeScreenData} from './actions';
-import {showSearchBar, setSearchKeyword} from '../../navigators/actions';
+import { getHomeScreenData } from './actions';
+import { showSearchBar, setSearchKeyword } from '../../navigators/actions';
 
 // navigation
 import * as RootNavigation from '../../navigators/RootNavigation';
+import { withTranslation } from 'react-i18next';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchKeyword: '',
-      refreshing: false,
+      refreshing: false
     };
   }
 
@@ -36,12 +37,12 @@ class index extends Component {
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    this.props.getHomeScreenData().then(() => this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    this.props.getHomeScreenData().then(() => this.setState({ refreshing: false }));
   };
 
   render() {
-    const {loading, recentArticles, featuredArticles} = this.props;
+    const { t, loading, recentArticles, featuredArticles } = this.props;
     return (
       <ScrollView
         style={styles.mainContainer}
@@ -49,48 +50,46 @@ class index extends Component {
           <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
         }>
         <View style={styles.container}>
-          <Text style={styles.welcomeTitle}>
-            Welcome to wikiHow, the most trusted how-to site on the internet.
-          </Text>
-          <Text style={styles.welcomeSubtitle}>What will you learn on wikihow today?</Text>
+          <Text style={styles.welcomeTitle}>{t('WELCOME_TO_APP')}</Text>
+          <Text style={styles.welcomeSubtitle}>{t('WHAT_WILL_YOU_LEARN')}</Text>
           <FastImage
             style={styles.cover}
             source={{
-              uri: 'https://www.wikihow.com/extensions/wikihow/homepage/images/books2.webp',
+              uri: 'https://www.wikihow.com/extensions/wikihow/homepage/images/books2.webp'
             }}
           />
         </View>
         <View style={styles.searchContainer}>
           <View style={styles.searchInputRow}>
-            <Icon style={{alignSelf: 'center'}} name="search" size={22} color="gray" />
+            <Icon style={{ alignSelf: 'center' }} name="search" size={22} color="gray" />
             <TextInput
               style={styles.searchInput}
               selectionColor={COLORS.olivine2}
-              placeholder="Search how to..."
-              onChangeText={text => this.props.setSearchKeyword(text)}
+              placeholder={t('SEARCH_HOW_TO')}
+              onChangeText={(text) => this.props.setSearchKeyword(text)}
               onSubmitEditing={() => {
                 RootNavigation.navigate('SearchPage', {
-                  searchKeyword: this.props.searchKeyword,
+                  searchKeyword: this.props.searchKeyword
                 });
                 this.props.showSearchBar();
               }}
             />
           </View>
         </View>
-        <SectionHeader text="Recent Articles" />
+        <SectionHeader text={t('RECENT_ARTICLES')} />
         <View style={styles.articleWrapList}>
           {loading ? (
             <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
           ) : (
-            recentArticles.slice(0, 6).map(article => <ArticleListItem article={article} />)
+            recentArticles.slice(0, 6).map((article) => <ArticleListItem article={article} />)
           )}
         </View>
-        <SectionHeader text="Featured Articles" />
+        <SectionHeader text={t('FEATURED_ARTICLES')} />
         {loading ? (
           <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
         ) : (
           <View style={styles.articleWrapList}>
-            {featuredArticles.slice(0, 6).map(article => (
+            {featuredArticles.slice(0, 6).map((article) => (
               <ArticleListItem article={article} />
             ))}
           </View>
@@ -100,15 +99,15 @@ class index extends Component {
   }
 }
 
-function mapStateToProps({homePageRed, mainNavigationRed}) {
+function mapStateToProps({ homePageRed, mainNavigationRed }) {
   return {
     loading: homePageRed.loading_screen,
     recentArticles: homePageRed.recentArticles,
     featuredArticles: homePageRed.featuredArticles,
-    searchKeyword: mainNavigationRed.searchKeyword,
+    searchKeyword: mainNavigationRed.searchKeyword
   };
 }
 
-export default connect(mapStateToProps, {getHomeScreenData, setSearchKeyword, showSearchBar})(
-  index,
+export default connect(mapStateToProps, { getHomeScreenData, setSearchKeyword, showSearchBar })(
+  withTranslation()(index)
 );

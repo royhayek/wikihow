@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -9,11 +9,11 @@ import {
   Modal,
   Share,
   Alert,
-  RefreshControl,
+  RefreshControl
 } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import HTML from 'react-native-render-html';
 
 // components
@@ -27,7 +27,7 @@ import {
   tipsStyles,
   videoTranscriptStyles,
   referencesStyles,
-  warningsStyles,
+  warningsStyles
 } from './style';
 
 //actions
@@ -35,13 +35,13 @@ import {
   getArticleDetails,
   getRandomArticle,
   updateArticleViews,
-  navigateTo_ArticleScreen,
+  navigateTo_ArticleScreen
 } from './actions';
 
 // utils
-import {bookmark, formatDate, share} from '../../util/Helpers';
+import { bookmark, formatDate, share } from '../../util/Helpers';
 
-import {URI} from '../../variables';
+import { URI } from '../../variables';
 import Video from 'react-native-video';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -52,15 +52,17 @@ import ArticleParagraphHeader from './components/ArticleParagraphHeader';
 import ArticlePartHeader from '../../components/ArticlePartHeader';
 import ArticlePartSection from '../../components/ArticlePartSection';
 
-import {ms, mvs} from 'react-native-size-matters';
-import {fontSize} from '../../theme/fontSize';
-import {COLORS} from '../../theme/color';
+import { ms, mvs } from 'react-native-size-matters';
+import { fontSize } from '../../theme/fontSize';
+import { COLORS } from '../../theme/color';
 
 import realm from '../../models';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Menu, MenuItem} from 'react-native-material-menu';
-import {name as appName} from '../../../app.json';
+import { Menu, MenuItem } from 'react-native-material-menu';
+import { displayName as appName } from '../../../app.json';
 import Loader from '../../components/Loader';
+import { withTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 const width = Dimensions.get('window').width;
 
@@ -71,78 +73,71 @@ class index extends Component {
       playVideo: false,
       videoTranscriptVisible: false,
       dropdownVisible: false,
-      refreshing: false,
+      refreshing: false
     };
   }
 
   componentDidMount() {
-    this.fetchArticleDetails(false);
+    this.props.navigation.addListener('focus', () => {
+      this.fetchArticleDetails(false);
+    });
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    this.fetchArticleDetails(true).then(() => this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    this.fetchArticleDetails(true).then(() => this.setState({ refreshing: false }));
   };
 
-  fetchArticleDetails = async refreshing => {
-    const {articleId, isRandom} = this.props.route.params;
+  fetchArticleDetails = async (refreshing) => {
+    const { articleId, isRandom } = this.props.route.params;
+
     if (isRandom) {
-      if (!refreshing) {
-        this.props.navigation.addListener('focus', () => {
-          this.props.getRandomArticle();
-        });
-      } else {
-        this.props.getRandomArticle();
-      }
+      this.props.getRandomArticle();
     } else {
-      await this.props.getArticleDetails(articleId);
-      await this.props.updateArticleViews(articleId);
+      this.props.getArticleDetails(articleId);
+      this.props.updateArticleViews(articleId);
     }
   };
 
-  goToArticleScreen = article => {
-    this.props.navigateTo_ArticleScreen('Article', {article});
+  goToArticleScreen = (article) => {
+    this.props.navigateTo_ArticleScreen('Article', { article });
   };
 
-  videoError = error => {
+  videoError = (error) => {
     console.log('Video loading error', error);
   };
 
-  videoOnBuffer = data => {
+  videoOnBuffer = (data) => {
     console.log('data', data);
   };
 
   toggleVideoTranscriptVisible = () => {
-    this.setState({videoTranscriptVisible: !this.state.videoTranscriptVisible});
+    this.setState({ videoTranscriptVisible: !this.state.videoTranscriptVisible });
   };
 
-  hideMenu = () => this.setState({dropdownVisible: false});
+  hideMenu = () => this.setState({ dropdownVisible: false });
 
-  showMenu = () => this.setState({dropdownVisible: true});
+  showMenu = () => this.setState({ dropdownVisible: true });
 
-  bookmarkArticle = id => {
-    bookmark({id: id, callback: this.hideMenu});
+  bookmarkArticle = (id) => {
+    bookmark({ id: id, callback: this.hideMenu });
   };
 
   shareArticle = async () => {
     share({
-      title: 'Check out this ' + appName + ' article on ' + this.props.details.title,
+      title: t('CHECK_OUT_THIS_APP') + this.props.details.title,
       message:
-        'I read this great article on ' +
-        this.props.details.title +
-        '. Download ' +
-        appName +
-        ' and check it out!',
-      callback: this.hideMenu,
+        t('I_READ_THIS_GREAT_ARTICLE') + this.props.details.title + t('DOWNLOAD_AND_CHECK_IT_OUT'),
+      callback: this.hideMenu
     });
   };
 
-  isArticleBookmarked = id => {
-    return realm.objects('ArticleModel').filter(article => article.id === String(id)).length > 0;
+  isArticleBookmarked = (id) => {
+    return realm.objects('ArticleModel').filter((article) => article.id === String(id)).length > 0;
   };
 
   render() {
-    const {loading, details} = this.props;
+    const { t, loading, details } = this.props;
     return (
       <View>
         {loading ? (
@@ -164,41 +159,43 @@ class index extends Component {
                   }
                   onRequestClose={this.hideMenu}>
                   <MenuItem onPress={() => this.bookmarkArticle(details.id)}>
-                    {this.isArticleBookmarked(details.id) ? 'Remove bookmark' : 'Bookmark'}
+                    {this.isArticleBookmarked(details.id) ? t('REMOVE_BOOKMARK') : t('BOOKMARK')}
                   </MenuItem>
-                  <MenuItem onPress={this.shareArticle}>Share article...</MenuItem>
+                  <MenuItem onPress={this.shareArticle}>{t('SHARE_ARTICLE')}</MenuItem>
                 </Menu>
               </View>
               <View style={styles.publisherContainer}>
-                <Text style={styles.publishedByText}>Published by</Text>
+                <Text style={styles.publishedByText}>{t('PUBLISHED_BY')}</Text>
                 <TouchableOpacity
                   onPress={() =>
                     RootNavigation.navigate('AuthorProfile', {
-                      authorId: details?.author?.id,
+                      authorId: details?.author?.id
                     })
                   }>
                   <Text style={styles.authorNameText}>{' ' + details?.author?.name}</Text>
                 </TouchableOpacity>
               </View>
-              <Text style={styles.updatedDate}>Last Updated: {formatDate(details.updated_at)}</Text>
+              <Text style={styles.updatedDate}>
+                {t('LAST_UPDATED')}: {formatDate(details.updated_at)}
+              </Text>
             </View>
             <View style={styles.tabContainer}>
               <View style={styles.tab}>
-                <Text style={styles.tabTitle}>ARTICLE</Text>
+                <Text style={styles.tabTitle}>{t('ARTICLE')}</Text>
                 <View style={styles.tabLine} />
               </View>
             </View>
             <View style={styles.container}>
               <HTML
                 contentWidth={width}
-                source={{html: details.description}}
+                source={{ html: details.description }}
                 tagsStyles={tagsStyles}
               />
             </View>
-            {details.parts?.map(part => (
+            {details.parts?.map((part) => (
               <View key={part.id}>
                 <ArticlePartHeader part={part} count={details.parts.length} />
-                {part.methods?.map(method => (
+                {part.methods?.map((method) => (
                   <ArticlePartSection method={method} />
                 ))}
               </View>
@@ -208,32 +205,32 @@ class index extends Component {
                 <View
                   style={[
                     styles.rowContainer,
-                    {justifyContent: 'space-between', alignItems: 'center', marginRight: ms(14)},
+                    { justifyContent: 'space-between', alignItems: 'center', marginRight: ms(14) }
                   ]}>
-                  <Text style={styles.aboutThisArticleText}>Video</Text>
+                  <Text style={styles.aboutThisArticleText}>{t('VIDEO')}</Text>
                   <TouchableOpacity
                     style={styles.videoTranscriptBtn}
                     onPress={() => this.toggleVideoTranscriptVisible()}>
-                    <Text style={{color: COLORS.white}}>Read Video Transcript</Text>
+                    <Text style={{ color: COLORS.white }}>{t('READ_VIDEO_TRANSCRIPT')}</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.articleVideoContainer}>
                   <Video
                     controls={true}
-                    onFullscreenPlayerWillPresent={() => this.setState({playVideo: true})}
-                    onFullscreenPlayerDidPresent={() => this.setState({playVideo: true})}
-                    onFullscreenPlayerWillDismiss={() => this.setState({playVideo: false})}
-                    onFullscreenPlayerDidDismiss={() => this.setState({playVideo: false})}
+                    onFullscreenPlayerWillPresent={() => this.setState({ playVideo: true })}
+                    onFullscreenPlayerDidPresent={() => this.setState({ playVideo: true })}
+                    onFullscreenPlayerWillDismiss={() => this.setState({ playVideo: false })}
+                    onFullscreenPlayerDidDismiss={() => this.setState({ playVideo: false })}
                     posterResizeMode={'contain'}
                     rate={1}
                     paused={!this.state.playVideo}
                     volume={1}
                     minLoadRetryCount={5}
                     source={{
-                      uri: URI + '/uploads/articles/' + details?.video,
+                      uri: URI + '/uploads/articles/' + details?.video
                     }}
                     poster={URI + '/uploads/articles/' + details?.video}
-                    ref={ref => {
+                    ref={(ref) => {
                       this.player = ref;
                     }}
                     ignoreSilentSwitch="obey"
@@ -257,18 +254,18 @@ class index extends Component {
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      alignItems: 'center',
+                      alignItems: 'center'
                     }}>
-                    <Text style={{color: COLORS.olivine2, flex: 1, fontSize: fontSize.size18}}>
-                      Video Transcript
+                    <Text style={{ color: COLORS.olivine2, flex: 1, fontSize: fontSize.size18 }}>
+                      {t('VIDEO_TRANSCRIPT')}
                     </Text>
                     <TouchableOpacity onPress={this.toggleVideoTranscriptVisible}>
-                      <Text>Close</Text>
+                      <Text>{t('CLOSE')}</Text>
                     </TouchableOpacity>
                   </View>
                   <HTML
                     contentWidth={width}
-                    source={{html: details?.videoTranscript}}
+                    source={{ html: details?.videoTranscript }}
                     tagsStyles={videoTranscriptStyles}
                   />
                 </View>
@@ -277,7 +274,7 @@ class index extends Component {
             {details.warnings && (
               <View>
                 <ArticleParagraphHeader
-                  title="Tips"
+                  title={t('TIPS')}
                   icon={
                     <MaterialCommunityIcon
                       name="lightbulb-multiple-outline"
@@ -289,7 +286,7 @@ class index extends Component {
                 <View style={styles.whiteContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{html: details.tips}}
+                    source={{ html: details.tips }}
                     tagsStyles={tipsStyles}
                   />
                 </View>
@@ -298,13 +295,13 @@ class index extends Component {
             {details.warnings && (
               <View>
                 <ArticleParagraphHeader
-                  title="Warnings"
+                  title={t('WARNINGS')}
                   icon={<AntDesign name="warning" size={35} color="white" />}
                 />
                 <View style={styles.whiteContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{html: details.warnings}}
+                    source={{ html: details.warnings }}
                     tagsStyles={warningsStyles}
                   />
                 </View>
@@ -312,17 +309,17 @@ class index extends Component {
             )}
             {details?.thingsNeeded && (
               <View>
-                <Text style={styles.aboutThisArticleText}>Things You'll Need</Text>
+                <Text style={styles.aboutThisArticleText}>{t('THINGS_YOU_WILL_NEED')}</Text>
                 <View style={styles.whiteContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{html: details?.thingsNeeded}}
+                    source={{ html: details?.thingsNeeded }}
                     tagsStyles={tipsStyles}
                   />
                 </View>
               </View>
             )}
-            {details?.videoTranscript && (
+            {/* {details?.videoTranscript && (
               <View>
                 <ArticleParagraphHeader
                   title="Warnings"
@@ -331,42 +328,42 @@ class index extends Component {
                 <View style={styles.whiteContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{html: details?.videoTranscript}}
+                    source={{ html: details?.videoTranscript }}
                     tagsStyles={tipsStyles}
                   />
                 </View>
               </View>
-            )}
+            )} */}
             {details?.references && (
               <View>
-                <Text style={styles.aboutThisArticleText}>References</Text>
+                <Text style={styles.aboutThisArticleText}>{t('REFERENCES')}</Text>
                 <View style={styles.whiteContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{html: details?.references}}
+                    source={{ html: details?.references }}
                     tagsStyles={referencesStyles}
                   />
                 </View>
               </View>
             )}
-            <Text style={styles.aboutThisArticleText}>About This Article</Text>
+            <Text style={styles.aboutThisArticleText}>{t('ABOUT_THIS_ARTICLE')}</Text>
             <View style={styles.container}>
               <View style={styles.authorInfoContainer}>
                 <Image
                   source={{
-                    uri: URI + '/uploads/users/' + details?.author?.avatar,
+                    uri: URI + '/uploads/users/' + details?.author?.avatar
                   }}
                   style={styles.authorAvatar}
                 />
                 <View style={styles.authoredByContainer}>
-                  <Text style={styles.authoredByText}>Authored by:</Text>
+                  <Text style={styles.authoredByText}>{t('AUTHORED_BY')}:</Text>
                   <TouchableOpacity
                     onPress={() =>
                       RootNavigation.navigate('AuthorProfile', {
-                        authorId: details?.author?.id,
+                        authorId: details?.author?.id
                       })
                     }>
-                    <Text style={{fontSize: fontSize.size16, fontWeight: 'bold'}}>
+                    <Text style={{ fontSize: fontSize.size16, fontWeight: 'bold' }}>
                       {details?.author?.name}
                     </Text>
                   </TouchableOpacity>
@@ -374,31 +371,31 @@ class index extends Component {
               </View>
               <HTML
                 contentWidth={width}
-                source={{html: details.articleInfo}}
+                source={{ html: details.articleInfo }}
                 tagsStyles={articleInfoStyles}
               />
               <View style={styles.additionalInfoContainer}>
                 <View style={styles.rowContainer}>
-                  <Text style={styles.additionalInfoText}>Updated: </Text>
+                  <Text style={styles.additionalInfoText}>{t('UPDATED')}: </Text>
                   <Text style={styles.additionalInfoValueText}>
                     {formatDate(details.updated_at)}
                   </Text>
                 </View>
-                <View style={[styles.rowContainer, {marginTop: 5}]}>
-                  <Text style={styles.additionalInfoText}>Views: </Text>
+                <View style={[styles.rowContainer, { marginTop: 5 }]}>
+                  <Text style={styles.additionalInfoText}>{t('VIEWS')}: </Text>
                   <Text style={styles.additionalInfoValueText}>{details.views}</Text>
                 </View>
               </View>
               <View style={styles.additionalInfoContainer}>
                 <View style={styles.rowContainer}>
-                  <Text style={styles.additionalInfoText}>Categories: </Text>
+                  <Text style={styles.additionalInfoText}>{t('CATEGORIES')}: </Text>
                   <Text style={styles.additionalInfoValueText}>
-                    {details?.categories?.map(category => category.name).join(' | ')}
+                    {details?.categories?.map((category) => category.name).join(' | ')}
                   </Text>
                 </View>
               </View>
             </View>
-            <View style={{height: mvs(50)}} />
+            <View style={{ height: mvs(50) }} />
           </ScrollView>
         )}
       </View>
@@ -406,10 +403,10 @@ class index extends Component {
   }
 }
 
-function mapStateToProps({articleDetailsPageRed}) {
+function mapStateToProps({ articleDetailsPageRed }) {
   return {
     details: articleDetailsPageRed.data,
-    loading: articleDetailsPageRed.loading_screen,
+    loading: articleDetailsPageRed.loading_screen
   };
 }
 
@@ -417,5 +414,5 @@ export default connect(mapStateToProps, {
   getArticleDetails,
   getRandomArticle,
   updateArticleViews,
-  navigateTo_ArticleScreen,
-})(index);
+  navigateTo_ArticleScreen
+})(withTranslation()(index));

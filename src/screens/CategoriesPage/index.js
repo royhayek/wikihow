@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Text, View, FlatList, RefreshControl} from 'react-native';
+import React, { Component } from 'react';
+import { Text, View, FlatList, RefreshControl } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 // components
 import CategoryListItem from '../../components/CategoryListItem';
@@ -11,14 +11,15 @@ import CategoryListItem from '../../components/CategoryListItem';
 import styles from './style';
 
 // actions
-import {getCategories, navigateTo_ArticlesScreen} from './actions';
+import { getCategories, navigateTo_ArticlesScreen } from './actions';
 import Loader from '../../components/Loader';
+import { withTranslation } from 'react-i18next';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: false,
+      refreshing: false
     };
   }
 
@@ -26,21 +27,21 @@ class index extends Component {
     this.props.getCategories();
   }
 
-  goToArticlesScreen = category => {
-    this.props.navigateTo_ArticlesScreen({category});
+  goToArticlesScreen = (category) => {
+    this.props.navigateTo_ArticlesScreen({ category });
   };
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    this.props.getCategories().then(() => this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    this.props.getCategories().then(() => this.setState({ refreshing: false }));
   };
 
   render() {
-    const {categories, loadingScreen} = this.props;
+    const { t, categories, loadingScreen } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.headerStyle}>Categories</Text>
+          <Text style={styles.headerStyle}>{t('CATEGORIES')}</Text>
         </View>
         <View style={styles.background}>
           <View style={styles.categoriesListContainer}>
@@ -54,7 +55,7 @@ class index extends Component {
                 showsVerticalScrollIndicator={false}
                 data={categories}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={category => (
+                renderItem={(category) => (
                   <CategoryListItem category={category} onPress={this.goToArticlesScreen} />
                 )}
               />
@@ -66,14 +67,14 @@ class index extends Component {
   }
 }
 
-function mapStateToProps({categoriesPageRed}) {
+function mapStateToProps({ categoriesPageRed }) {
   return {
     categories: categoriesPageRed.data,
-    loadingScreen: categoriesPageRed.loading_screen,
+    loadingScreen: categoriesPageRed.loading_screen
   };
 }
 
 export default connect(mapStateToProps, {
   getCategories,
-  navigateTo_ArticlesScreen,
-})(index);
+  navigateTo_ArticlesScreen
+})(withTranslation()(index));
