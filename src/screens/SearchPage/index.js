@@ -13,6 +13,7 @@ import HorizontalArticleListItem from '../../components/HorizontalArticleListIte
 import Loader from '../../components/Loader';
 import { t } from 'i18next';
 import { withTranslation } from 'react-i18next';
+import { COLORS } from '../../theme/color';
 
 class index extends Component {
   constructor(props) {
@@ -49,7 +50,12 @@ class index extends Component {
         ) : this.props.articles.length > 0 ? (
           <FlatList
             refreshControl={
-              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                tintColor={COLORS.white}
+                progressBackgroundColor={COLORS.white}
+              />
             }
             showsVerticalScrollIndicator={false}
             data={this.props.articles}
@@ -57,8 +63,8 @@ class index extends Component {
             renderItem={(article) => <HorizontalArticleListItem article={article.item} />}
           />
         ) : (
-          <View style={styles.noArticlesText}>
-            <Text>{t('NO_ARTICLES_FOUND')}</Text>
+          <View style={styles.noArticlesContainer}>
+            <Text style={styles.noArticlesText}>{t('NO_ARTICLES_FOUND')}</Text>
           </View>
         )}
       </View>

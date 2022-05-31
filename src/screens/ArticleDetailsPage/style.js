@@ -1,60 +1,63 @@
-import {StyleSheet} from 'react-native';
-import {mvs} from 'react-native-size-matters';
-import {COLORS} from '../../theme/color';
-import {fontSize} from '../../theme/fontSize';
+import { StyleSheet } from 'react-native';
+import { ms, mvs } from 'react-native-size-matters';
+import { COLORS } from '../../theme/color';
+import { fontSize } from '../../theme/fontSize';
 
 export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.black
   },
   titleAndActionBtnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15,
+    marginTop: 15
   },
-  whiteContainer: {
-    backgroundColor: 'white',
+  blackContainer: {
+    backgroundColor: COLORS.black
   },
   updatedDate: {
-    color: '#595959',
+    color: COLORS.white,
     fontSize: 12,
     marginBottom: 15,
     fontWeight: 'bold',
+    marginTop: mvs(2)
   },
   tabContainer: {
     position: 'relative',
     borderWidth: 1,
-    borderColor: '#E6EEE0',
-    backgroundColor: '#f7faf6',
+    borderColor: COLORS.cloudyGrey,
+    backgroundColor: COLORS.cloudyGrey,
     marginHorizontal: -15,
     paddingHorizontal: 15,
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowOffset: {
       width: 6,
-      height: 6,
+      height: 6
     },
     shadowRadius: 6,
     elevation: 1,
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   articleTitleText: {
+    flex: 1,
     fontSize: 25,
-    color: '#222222',
+    color: COLORS.white,
     fontWeight: 'bold',
+    marginRight: ms(5)
   },
-  publisherContainer: {flexDirection: 'row'},
+  publisherContainer: { flexDirection: 'row' },
   publishedByText: {
     fontSize: 12,
-    color: '#222222',
-    fontWeight: 'bold',
+    color: COLORS.white,
+    fontWeight: 'bold'
   },
   authorNameText: {
     fontSize: 12,
-    color: '#307530',
-    fontWeight: 'bold',
+    color: COLORS.orange,
+    fontWeight: 'bold'
   },
   tab: {
     position: 'relative',
@@ -62,12 +65,12 @@ export const styles = StyleSheet.create({
     marginVertical: 0,
     fontWeight: 'bold',
     fontSize: 12,
-    paddingVertical: 10,
+    paddingVertical: 10
   },
   tabTitle: {
-    color: '#707070',
+    color: COLORS.white,
     fontSize: 12.8,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   tabLine: {
     position: 'absolute',
@@ -77,151 +80,166 @@ export const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
+    borderTopRightRadius: 4
   },
   partsContainer: {
     width: '100%',
     position: 'relative',
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   partsContainerHeader: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   aboutThisArticleText: {
     fontSize: fontSize.size20,
     padding: 16,
     fontWeight: 'bold',
-    color: '#222222',
+    color: 'white',
+    backgroundColor: COLORS.cloudyGrey
   },
   articleVideoContainer: {
     flex: 1,
     height: mvs(200),
     backgroundColor: 'black',
+    marginVertical: mvs(20)
   },
   articleVideo: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0
   },
   authorInfoContainer: {
     paddingVertical: 15,
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: COLORS.aquaHaze,
+    borderColor: COLORS.aquaHaze
   },
   authorAvatar: {
     width: 50,
     height: 50,
-    borderRadius: 8,
+    borderRadius: 8
   },
   authoredByContainer: {
     marginLeft: 15,
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   authoredByText: {
     fontSize: fontSize.size14,
-    color: '#545454',
-    fontWeight: 'bold',
+    color: COLORS.white,
+    fontWeight: 'bold'
   },
   additionalInfoContainer: {
     borderBottomWidth: 1,
     borderColor: '#f3f3f3',
-    paddingVertical: 10,
+    paddingVertical: 10
   },
   additionalInfoText: {
     fontSize: fontSize.size15,
-    color: '#545454',
+    color: COLORS.white
   },
   additionalInfoValueText: {
     flex: 1,
     fontSize: fontSize.size15,
-    color: '#545454',
-    fontWeight: 'bold',
+    color: COLORS.white,
+    fontWeight: 'bold'
   },
   rowContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   modalView: {
     margin: 15,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.black,
     padding: 25,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 2
+  },
+  videoTranscriptViewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  videoTranscriptTitle: {
+    color: COLORS.orange,
+    flex: 1,
+    fontSize: fontSize.size18
   },
   videoTranscriptBtn: {
-    backgroundColor: COLORS.olivine2,
+    backgroundColor: COLORS.orange,
     paddingVertical: mvs(6),
     paddingHorizontal: mvs(10),
-    borderRadius: 4,
+    borderRadius: 4
   },
+  closeBtn: {
+    color: COLORS.white
+  }
 });
 
 export const tagsStyles = {
   body: {
     fontSize: fontSize.size16,
-    color: '#545454',
-    lineHeight: 25,
-  },
+    color: COLORS.white,
+    lineHeight: 25
+  }
 };
 
 export const tipsStyles = {
   body: {
     fontSize: fontSize.size16,
-    color: '#545454',
+    color: COLORS.white,
     lineHeight: 25,
     paddingLeft: 10,
-    paddingRight: 20,
-  },
+    paddingRight: 20
+  }
 };
 
 export const articleInfoStyles = {
   body: {
     fontSize: fontSize.size15,
-    color: '#545454',
+    color: COLORS.white,
     lineHeight: 21,
     paddingLeft: 10,
-    paddingRight: 20,
-  },
+    paddingRight: 20
+  }
 };
 
 export const videoTranscriptStyles = {
   body: {
     fontSize: fontSize.size15,
-    color: '#545454',
-    lineHeight: 21,
-  },
+    color: COLORS.white,
+    lineHeight: 21
+  }
 };
 
 export const referencesStyles = {
   body: {
     fontSize: fontSize.size15,
-    color: '#545454',
+    color: COLORS.white,
     lineHeight: 24,
     paddingLeft: 10,
-    paddingRight: 20,
-  },
+    paddingRight: 20
+  }
 };
 
 export const warningsStyles = {
   body: {
     fontSize: fontSize.size16,
-    color: '#545454',
+    color: COLORS.white,
     lineHeight: 25,
     paddingLeft: 10,
-    paddingRight: 20,
-  },
+    paddingRight: 20
+  }
 };

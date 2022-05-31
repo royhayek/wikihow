@@ -41,9 +41,9 @@ export const de = {
   CHECK_OUT_THIS_APP: `Lese diesen Artikel in der ${appName} App `,
   I_READ_THIS_GREAT_ARTICLE: `Ich habe diesen tollen Artikel in der ${appName} App gelesen `,
   DOWNLOAD_AND_CHECK_IT_OUT: `. ${appName} downloaden und jetzt ansehen.`,
-  VIDEO_TRANSCRIPT: 'Video Transcript',
-  CLOSE: 'Close',
-  VIEW: 'View'
+  VIDEO_TRANSCRIPT: 'Videobeschreibung',
+  CLOSE: 'Schließen',
+  VIEW: 'Ansehen'
 };
 
 export default de;

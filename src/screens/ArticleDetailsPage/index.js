@@ -78,24 +78,21 @@ class index extends Component {
   }
 
   componentDidMount() {
-    this.props.navigation.addListener('focus', () => {
-      this.fetchArticleDetails(false);
-    });
+    this.fetchArticleDetails();
   }
 
   onRefresh = () => {
     this.setState({ refreshing: true });
-    this.fetchArticleDetails(true).then(() => this.setState({ refreshing: false }));
+    this.fetchArticleDetails().then(() => this.setState({ refreshing: false }));
   };
 
-  fetchArticleDetails = async (refreshing) => {
-    const { articleId, isRandom } = this.props.route.params;
-
-    if (isRandom) {
-      this.props.getRandomArticle();
-    } else {
+  fetchArticleDetails = async () => {
+    if (this.props.route?.params) {
+      const { articleId } = this.props.route.params;
       this.props.getArticleDetails(articleId);
       this.props.updateArticleViews(articleId);
+    } else {
+      this.props.getRandomArticle();
     }
   };
 
@@ -125,9 +122,9 @@ class index extends Component {
 
   shareArticle = async () => {
     share({
-      title: t('CHECK_OUT_THIS_APP') + this.props.details.title,
+      title: t('CHECK_OUT_THIS_APP') + this.props.details?.title,
       message:
-        t('I_READ_THIS_GREAT_ARTICLE') + this.props.details.title + t('DOWNLOAD_AND_CHECK_IT_OUT'),
+        t('I_READ_THIS_GREAT_ARTICLE') + this.props.details?.title + t('DOWNLOAD_AND_CHECK_IT_OUT'),
       callback: this.hideMenu
     });
   };
@@ -145,23 +142,32 @@ class index extends Component {
         ) : (
           <ScrollView
             refreshControl={
-              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                tintColor={COLORS.white}
+                progressBackgroundColor={COLORS.white}
+              />
             }>
             <View style={styles.container}>
               <View style={styles.titleAndActionBtnContainer}>
-                <Text style={styles.articleTitleText}>{details.title}</Text>
+                <Text style={styles.articleTitleText}>{details?.title}</Text>
                 <Menu
                   visible={this.state.dropdownVisible}
                   anchor={
                     <TouchableOpacity onPress={this.showMenu}>
-                      <MaterialIcons name="more-vert" size={25} color={COLORS.black} />
+                      <MaterialIcons name="more-vert" size={25} color={COLORS.white} />
                     </TouchableOpacity>
                   }
                   onRequestClose={this.hideMenu}>
-                  <MenuItem onPress={() => this.bookmarkArticle(details.id)}>
-                    {this.isArticleBookmarked(details.id) ? t('REMOVE_BOOKMARK') : t('BOOKMARK')}
+                  <MenuItem
+                    textStyle={{ color: COLORS.black }}
+                    onPress={() => this.bookmarkArticle(details?.id)}>
+                    {this.isArticleBookmarked(details?.id) ? t('REMOVE_BOOKMARK') : t('BOOKMARK')}
                   </MenuItem>
-                  <MenuItem onPress={this.shareArticle}>{t('SHARE_ARTICLE')}</MenuItem>
+                  <MenuItem textStyle={{ color: COLORS.black }} onPress={this.shareArticle}>
+                    {t('SHARE_ARTICLE')}
+                  </MenuItem>
                 </Menu>
               </View>
               <View style={styles.publisherContainer}>
@@ -176,7 +182,7 @@ class index extends Component {
                 </TouchableOpacity>
               </View>
               <Text style={styles.updatedDate}>
-                {t('LAST_UPDATED')}: {formatDate(details.updated_at)}
+                {t('LAST_UPDATED')}: {formatDate(details?.updated_at)}
               </Text>
             </View>
             <View style={styles.tabContainer}>
@@ -188,15 +194,15 @@ class index extends Component {
             <View style={styles.container}>
               <HTML
                 contentWidth={width}
-                source={{ html: details.description }}
+                source={{ html: details?.description }}
                 tagsStyles={tagsStyles}
               />
             </View>
-            {details.parts?.map((part) => (
+            {details?.parts?.map((part) => (
               <View key={part.id}>
-                <ArticlePartHeader part={part} count={details.parts.length} />
+                <ArticlePartHeader part={part} count={details?.parts.length} />
                 {part.methods?.map((method) => (
-                  <ArticlePartSection method={method} />
+                  <ArticlePartSection key={method.id} method={method} />
                 ))}
               </View>
             ))}
@@ -205,7 +211,12 @@ class index extends Component {
                 <View
                   style={[
                     styles.rowContainer,
-                    { justifyContent: 'space-between', alignItems: 'center', marginRight: ms(14) }
+                    {
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      paddingRight: ms(14),
+                      backgroundColor: COLORS.cloudyGrey
+                    }
                   ]}>
                   <Text style={styles.aboutThisArticleText}>{t('VIDEO')}</Text>
                   <TouchableOpacity
@@ -250,17 +261,10 @@ class index extends Component {
               }}>
               <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
-                    }}>
-                    <Text style={{ color: COLORS.olivine2, flex: 1, fontSize: fontSize.size18 }}>
-                      {t('VIDEO_TRANSCRIPT')}
-                    </Text>
+                  <View style={styles.videoTranscriptViewContainer}>
+                    <Text style={styles.videoTranscriptTitle}>{t('VIDEO_TRANSCRIPT')}</Text>
                     <TouchableOpacity onPress={this.toggleVideoTranscriptVisible}>
-                      <Text>{t('CLOSE')}</Text>
+                      <Text style={styles.closeBtn}>{t('CLOSE')}</Text>
                     </TouchableOpacity>
                   </View>
                   <HTML
@@ -271,7 +275,7 @@ class index extends Component {
                 </View>
               </View>
             </Modal>
-            {details.warnings && (
+            {details?.warnings && (
               <View>
                 <ArticleParagraphHeader
                   title={t('TIPS')}
@@ -283,25 +287,25 @@ class index extends Component {
                     />
                   }
                 />
-                <View style={styles.whiteContainer}>
+                <View style={styles.blackContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{ html: details.tips }}
+                    source={{ html: details?.tips }}
                     tagsStyles={tipsStyles}
                   />
                 </View>
               </View>
             )}
-            {details.warnings && (
+            {details?.warnings && (
               <View>
                 <ArticleParagraphHeader
                   title={t('WARNINGS')}
                   icon={<AntDesign name="warning" size={35} color="white" />}
                 />
-                <View style={styles.whiteContainer}>
+                <View style={styles.blackContainer}>
                   <HTML
                     contentWidth={width}
-                    source={{ html: details.warnings }}
+                    source={{ html: details?.warnings }}
                     tagsStyles={warningsStyles}
                   />
                 </View>
@@ -310,7 +314,7 @@ class index extends Component {
             {details?.thingsNeeded && (
               <View>
                 <Text style={styles.aboutThisArticleText}>{t('THINGS_YOU_WILL_NEED')}</Text>
-                <View style={styles.whiteContainer}>
+                <View style={styles.blackContainer}>
                   <HTML
                     contentWidth={width}
                     source={{ html: details?.thingsNeeded }}
@@ -325,7 +329,7 @@ class index extends Component {
                   title="Warnings"
                   icon={<AntDesign name="warning" size={35} color="white" />}
                 />
-                <View style={styles.whiteContainer}>
+                <View style={styles.blackContainer}>
                   <HTML
                     contentWidth={width}
                     source={{ html: details?.videoTranscript }}
@@ -337,7 +341,7 @@ class index extends Component {
             {details?.references && (
               <View>
                 <Text style={styles.aboutThisArticleText}>{t('REFERENCES')}</Text>
-                <View style={styles.whiteContainer}>
+                <View style={styles.blackContainer}>
                   <HTML
                     contentWidth={width}
                     source={{ html: details?.references }}
@@ -363,27 +367,34 @@ class index extends Component {
                         authorId: details?.author?.id
                       })
                     }>
-                    <Text style={{ fontSize: fontSize.size16, fontWeight: 'bold' }}>
+                    <Text
+                      style={{
+                        fontSize: fontSize.size16,
+                        fontWeight: 'bold',
+                        color: COLORS.orange
+                      }}>
                       {details?.author?.name}
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-              <HTML
-                contentWidth={width}
-                source={{ html: details.articleInfo }}
-                tagsStyles={articleInfoStyles}
-              />
+              {details?.articleInfo && (
+                <HTML
+                  contentWidth={width}
+                  source={{ html: details?.articleInfo }}
+                  tagsStyles={articleInfoStyles}
+                />
+              )}
               <View style={styles.additionalInfoContainer}>
                 <View style={styles.rowContainer}>
                   <Text style={styles.additionalInfoText}>{t('UPDATED')}: </Text>
                   <Text style={styles.additionalInfoValueText}>
-                    {formatDate(details.updated_at)}
+                    {formatDate(details?.updated_at)}
                   </Text>
                 </View>
                 <View style={[styles.rowContainer, { marginTop: 5 }]}>
                   <Text style={styles.additionalInfoText}>{t('VIEWS')}: </Text>
-                  <Text style={styles.additionalInfoValueText}>{details.views}</Text>
+                  <Text style={styles.additionalInfoValueText}>{details?.views}</Text>
                 </View>
               </View>
               <View style={styles.additionalInfoContainer}>

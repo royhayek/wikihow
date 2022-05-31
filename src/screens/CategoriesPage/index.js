@@ -14,6 +14,7 @@ import styles from './style';
 import { getCategories, navigateTo_ArticlesScreen } from './actions';
 import Loader from '../../components/Loader';
 import { withTranslation } from 'react-i18next';
+import { COLORS } from '../../theme/color';
 
 class index extends Component {
   constructor(props) {
@@ -50,7 +51,12 @@ class index extends Component {
             ) : (
               <FlatList
                 refreshControl={
-                  <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+                  <RefreshControl
+                    refreshing={this.state.refreshing}
+                    onRefresh={this.onRefresh}
+                    tintColor={COLORS.white}
+                    progressBackgroundColor={COLORS.white}
+                  />
                 }
                 showsVerticalScrollIndicator={false}
                 data={categories}

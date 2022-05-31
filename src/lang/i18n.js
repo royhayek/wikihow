@@ -7,11 +7,11 @@ import en from './en';
 import de from './de';
 
 export default i18n.use(initReactI18next).init({
-  lng: 'en',
+  lng: 'de',
   resources: {
-    en: { translation: en },
-    de: { translation: de }
+    de: { translation: de },
+    en: { translation: en }
   },
-  fallbackLng: 'en',
+  fallbackLng: 'de',
   interpolation: { escapeValue: false }
 });

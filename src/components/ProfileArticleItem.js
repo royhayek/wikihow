@@ -27,7 +27,7 @@ const ProfileArticleItem = ({ t, article }) => {
         </View>
       </TouchableOpacity>
       <HTML contentWidth={width} source={{ html: article.description }} tagsStyles={tagsStyles} />
-      <View style={styles.divider} bgColor={COLORS.vampireGrey} thickness={0.5} />
+      <View style={styles.divider} bgColor={COLORS.cloudyGrey} thickness={0.5} />
     </View>
   );
 };
@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
   },
   howTo: {
     marginTop: 5,
-    color: COLORS.granite,
+    color: COLORS.cloudyGrey,
     fontSize: 13,
     lineHeight: 13,
     marginBottom: 2
   },
   title: {
     flex: 1,
-    color: 'green',
+    color: COLORS.orange,
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 20,
-    backgroundColor: COLORS.vampireGrey,
+    backgroundColor: COLORS.cloudyGrey,
     height: mvs(0.5)
   }
 });
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 const tagsStyles = {
   body: {
     fontSize: 16,
-    color: COLORS.davyGrey,
+    color: COLORS.white,
     lineHeight: 25
   }
 };

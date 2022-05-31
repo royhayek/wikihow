@@ -14,6 +14,7 @@ import { getBookmarkedArticles } from './actions';
 import Loader from '../../components/Loader';
 import HorizontalArticleListItem from '../../components/HorizontalArticleListItem';
 import { withTranslation } from 'react-i18next';
+import { COLORS } from '../../theme/color';
 
 class index extends Component {
   constructor(props) {
@@ -34,6 +35,8 @@ class index extends Component {
 
   render() {
     const { t } = this.props;
+    console.log('this.props.articles.length', this.props.articles.length > 0);
+
     return (
       <View>
         {this.props.loadingScreen ? (
@@ -41,7 +44,12 @@ class index extends Component {
         ) : this.props.articles.length > 0 ? (
           <FlatList
             refreshControl={
-              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                tintColor={COLORS.white}
+                progressBackgroundColor={COLORS.white}
+              />
             }
             style={styles.articlesList}
             data={this.props.articles}
@@ -49,8 +57,8 @@ class index extends Component {
             renderItem={(article) => <HorizontalArticleListItem article={article.item} />}
           />
         ) : (
-          <View style={styles.noBookmarksText}>
-            <Text>{t('NO_BOOKMARKS_FOUND')}</Text>
+          <View style={styles.noBookmarksContainer}>
+            <Text style={styles.noBookmarksText}>{t('NO_BOOKMARKS_FOUND')}</Text>
           </View>
         )}
       </View>

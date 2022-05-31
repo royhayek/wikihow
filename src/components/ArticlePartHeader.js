@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     position: 'relative',
-    backgroundColor: 'white'
+    backgroundColor: COLORS.cloudyGrey
   },
   partsContainerHeader: {
     flexDirection: 'row',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5
   },
   partNumberContainer: {
-    backgroundColor: COLORS.olivine2,
+    backgroundColor: COLORS.orange,
     padding: 0,
     justifyContent: 'center',
     borderRadius: 7,
@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
   },
   methodPart: {
     fontSize: 17,
-    color: COLORS.darkGreen
+    color: COLORS.white
   },
   methodtitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: COLORS.darkGreen,
+    color: COLORS.white,
     width: '90%'
   }
 });

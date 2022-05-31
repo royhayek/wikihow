@@ -9,7 +9,7 @@ const DrawerMenuButton = ({onPress, title, icon}) => {
   return (
     <View style={containerStyle}>
       <TouchableOpacity onPress={onPress} style={{flexDirection: 'row'}}>
-        <Icon name={icon} size={18} color={COLORS.olivine2} />
+        <Icon name={icon} size={18} color={COLORS.orange} />
         <Text style={styles.buttonTextStyle}>{title}</Text>
       </TouchableOpacity>
     </View>

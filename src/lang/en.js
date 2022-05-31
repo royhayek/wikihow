@@ -25,7 +25,7 @@ export const en = {
   ARTICLE: 'Article',
   PART: 'Part',
   OF: 'of',
-  VIDEO: 'video',
+  VIDEO: 'Video',
   READ_VIDEO_TRANSCRIPT: 'Read Video Transcript',
   TIPS: 'Tips',
   WARNINGS: 'Warnings',
@@ -40,7 +40,10 @@ export const en = {
   HOW_TO: 'How To',
   CHECK_OUT_THIS_APP: `Check out this ${appName} article on `,
   I_READ_THIS_GREAT_ARTICLE: 'I read this great article on ',
-  DOWNLOAD_AND_CHECK_IT_OUT: `. Download ${appName} and check it out!`
+  DOWNLOAD_AND_CHECK_IT_OUT: `. Download ${appName} and check it out!`,
+  VIDEO_TRANSCRIPT: 'Video Transcript',
+  CLOSE: 'Close',
+  VIEW: 'View'
 };
 
 export default en;

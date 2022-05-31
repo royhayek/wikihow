@@ -4,14 +4,14 @@ export const COLORS = {
   snowDrift: '#F7FAF6',
   greenWhite: '#E6EEE0',
   gainsboro: '#DFDFDF',
-  olivine: '#94B778',
-  olivine2: '#93b874',
+  orange: '#F83C00',
   greyGreen: '#6d9d6c',
   forestGreen: '#307530',
   granite: '#808080',
   vampireGrey: '#515151',
   smokeyGrey: '#707070',
   cloudGrey: '#69726A',
+  cloudyGrey: '#696969',
   stormGrey: '#767676',
   davyGrey: '#545454',
   davyGrey2: '#595959',
@@ -19,5 +19,5 @@ export const COLORS = {
   carbonGrey: '#5C5C5C',
   black: '#000000',
   darkGreen: '#222222',
-  lightGray: '#d2d8cd',
+  lightGray: '#d2d8cd'
 };

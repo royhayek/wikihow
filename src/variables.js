@@ -6,7 +6,7 @@ export const PROTOCOL = 'https://';
 // // export const API = URI + '/v1';
 
 // //--api used at home--------------------------------------//
-export const URI = PROTOCOL + 'wikihowclone.royhayek.com';
+export const URI = PROTOCOL + 'backend.grillwiki.de';
 export const API = URI + '/api/';
 
 export const ACCESS_TOKEN = '***REMOVED***';

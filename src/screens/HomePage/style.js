@@ -1,42 +1,45 @@
-import {StyleSheet} from 'react-native';
-import {ms, mvs} from 'react-native-size-matters';
-import {COLORS} from '../../theme/color';
-import {fontSize} from '../../theme/fontSize';
+import { StyleSheet } from 'react-native';
+import { ms, mvs, vs } from 'react-native-size-matters';
+import { COLORS } from '../../theme/color';
+import { fontSize } from '../../theme/fontSize';
 
 export default StyleSheet.create({
   mainContainer: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.black
   },
   container: {
-    height: mvs(220),
+    height: vs(220),
     position: 'relative',
-    paddingHorizontal: ms(15),
+    paddingHorizontal: ms(15)
   },
   cover: {
-    width: '45%',
-    height: 120,
+    width: '55%',
+    height: vs(130),
     position: 'absolute',
     right: 15,
     bottom: 0,
+    zIndex: 0
   },
   welcomeTitle: {
     fontSize: 26,
     textAlign: 'left',
-    color: COLORS.blackCow,
+    color: COLORS.white,
     paddingTop: 25,
     fontWeight: 'bold',
     marginBottom: 15,
+    zIndex: 1
   },
   welcomeSubtitle: {
-    width: '50%',
+    width: '60%',
     fontSize: 19,
-    color: COLORS.blackCow,
+    color: COLORS.white,
     textAlign: 'left',
+    zIndex: 1
   },
   searchContainer: {
-    backgroundColor: COLORS.olivine,
+    backgroundColor: COLORS.orange,
     paddingHorizontal: ms(15),
-    paddingVertical: mvs(12),
+    paddingVertical: mvs(12)
   },
   searchInputRow: {
     width: '100%',
@@ -47,22 +50,25 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     alignItems: 'center',
     flexDirection: 'row',
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   searchInput: {
     textAlign: 'left',
     paddingHorizontal: ms(10),
     paddingVertical: mvs(10),
     fontSize: fontSize.size19,
-    color: COLORS.cloudGrey,
+    color: COLORS.cloudyGrey
   },
   articleWrapList: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginLeft: ms(5),
+    marginLeft: ms(5)
   },
   loaderStyle: {
     width: '100%',
-    paddingVertical: mvs(50),
+    paddingVertical: mvs(50)
   },
+  bottomSpacing: {
+    height: mvs(20)
+  }
 });

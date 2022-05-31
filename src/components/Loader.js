@@ -4,7 +4,7 @@ import {COLORS} from '../theme/color';
 
 class Loader extends Component {
   render() {
-    return <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />;
+    return <ActivityIndicator size="small" color={COLORS.orange} style={styles.loaderStyle} />;
   }
 }
 

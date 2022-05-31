@@ -1,18 +1,21 @@
-import {StyleSheet} from 'react-native';
-import {mvs} from 'react-native-size-matters';
-import {COLORS} from '../../theme/color';
-import {fontSize} from '../../theme/fontSize';
+import { StyleSheet } from 'react-native';
+import { mvs } from 'react-native-size-matters';
+import { COLORS } from '../../theme/color';
+import { fontSize } from '../../theme/fontSize';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.black
   },
-  noArticlesText: {
+  noArticlesContainer: {
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
+  noArticlesText: {
+    color: COLORS.white
+  }
 });
 
 export const tagsStyles = {
@@ -21,6 +24,6 @@ export const tagsStyles = {
     fontSize: fontSize.size16,
     color: COLORS.davyGrey,
     paddingHorizontal: mvs(20),
-    lineHeight: 22,
-  },
+    lineHeight: 22
+  }
 };

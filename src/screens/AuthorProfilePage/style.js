@@ -1,61 +1,60 @@
-import {StyleSheet} from 'react-native';
-import {mvs} from 'react-native-size-matters';
-import {COLORS} from '../../theme/color';
+import { StyleSheet } from 'react-native';
+import { mvs } from 'react-native-size-matters';
+import { COLORS } from '../../theme/color';
 
 export const styles = StyleSheet.create({
   container: {
     marginTop: 25,
     flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
+    width: '100%'
   },
   avatar: {
     marginTop: 10,
     width: 160,
     height: 160,
     borderRadius: 14,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   websiteBtn: {
-    backgroundColor: COLORS.olivine,
+    backgroundColor: COLORS.orange,
     borderRadius: 7,
     padding: 0,
     marginVertical: 10,
     width: 230,
     borderWidth: 1,
-    borderColor: COLORS.olivine,
-    alignSelf: 'center',
+    borderColor: COLORS.orange,
+    alignSelf: 'center'
   },
   websiteBtnText: {
     color: COLORS.white,
     textAlign: 'center',
     lineHeight: 30,
-    fontSize: 16,
+    fontSize: 16
   },
   name: {
     fontSize: 28,
     fontWeight: 'bold',
     paddingRight: 5,
-    color: COLORS.vampireGrey,
+    color: COLORS.white
   },
   bio: {
     marginTop: 10,
     fontSize: 16,
     paddingRight: 5,
-    color: COLORS.davyGrey,
-    lineHeight: 25,
+    color: COLORS.white,
+    lineHeight: 25
   },
   moreInfoContainer: {
-    marginHorizontal: 15,
+    marginHorizontal: 15
   },
   divider: {
     marginVertical: 20,
-    backgroundColor: COLORS.vampireGrey,
-    height: mvs(0.5),
+    backgroundColor: COLORS.cloudyGrey,
+    height: mvs(0.5)
   },
   articlesHeader: {
-    color: COLORS.vampireGrey,
+    color: COLORS.white,
     fontSize: 19,
-    marginBottom: 20,
-  },
+    marginBottom: 20
+  }
 });

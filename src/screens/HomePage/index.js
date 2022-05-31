@@ -47,25 +47,26 @@ class index extends Component {
       <ScrollView
         style={styles.mainContainer}
         refreshControl={
-          <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+            tintColor={COLORS.white}
+            progressBackgroundColor={COLORS.white}
+          />
         }>
         <View style={styles.container}>
-          <Text style={styles.welcomeTitle}>{t('WELCOME_TO_APP')}</Text>
+          <Text style={styles.welcomeTitle}>{t('WELCOME_TO_APP')} </Text>
           <Text style={styles.welcomeSubtitle}>{t('WHAT_WILL_YOU_LEARN')}</Text>
-          <FastImage
-            style={styles.cover}
-            source={{
-              uri: 'https://www.wikihow.com/extensions/wikihow/homepage/images/books2.webp'
-            }}
-          />
+          <FastImage style={styles.cover} source={require('../../../assets/bbq-grill-good.png')} />
         </View>
         <View style={styles.searchContainer}>
           <View style={styles.searchInputRow}>
             <Icon style={{ alignSelf: 'center' }} name="search" size={22} color="gray" />
             <TextInput
               style={styles.searchInput}
-              selectionColor={COLORS.olivine2}
+              selectionColor={COLORS.orange}
               placeholder={t('SEARCH_HOW_TO')}
+              placeholderTextColor={COLORS.cloudyGrey}
               onChangeText={(text) => this.props.setSearchKeyword(text)}
               onSubmitEditing={() => {
                 RootNavigation.navigate('SearchPage', {
@@ -79,21 +80,24 @@ class index extends Component {
         <SectionHeader text={t('RECENT_ARTICLES')} />
         <View style={styles.articleWrapList}>
           {loading ? (
-            <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
+            <ActivityIndicator size="small" color={COLORS.orange} style={styles.loaderStyle} />
           ) : (
-            recentArticles.slice(0, 6).map((article) => <ArticleListItem article={article} />)
+            recentArticles
+              .slice(0, 6)
+              .map((article) => <ArticleListItem key={article.id} article={article} />)
           )}
         </View>
         <SectionHeader text={t('FEATURED_ARTICLES')} />
         {loading ? (
-          <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
+          <ActivityIndicator size="small" color={COLORS.orange} style={styles.loaderStyle} />
         ) : (
           <View style={styles.articleWrapList}>
             {featuredArticles.slice(0, 6).map((article) => (
-              <ArticleListItem article={article} />
+              <ArticleListItem key={article.id} article={article} />
             ))}
           </View>
         )}
+        <View style={styles.bottomSpacing} />
       </ScrollView>
     );
   }

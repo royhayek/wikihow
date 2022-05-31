@@ -79,6 +79,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
+    excludeAppGlideModule: true,
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -191,6 +192,11 @@ android {
             }
 
         }
+    }
+
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
     }
 }
 

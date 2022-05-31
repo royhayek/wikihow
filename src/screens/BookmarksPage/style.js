@@ -1,12 +1,16 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { COLORS } from '../../theme/color';
 
 export default StyleSheet.create({
-  noBookmarksText: {
+  noBookmarksContainer: {
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+  noBookmarksText: {
+    color: COLORS.white
   },
   articlesList: {
-    height: '100%',
-  },
+    height: '100%'
+  }
 });

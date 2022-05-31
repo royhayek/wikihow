@@ -55,9 +55,10 @@ class index extends Component {
             <Text style={styles.categoryName}>{category.name}</Text>
             <View style={styles.categorySearchContainer}>
               <TextInput
-                selectionColor={COLORS.olivine2}
+                selectionColor={COLORS.orange}
                 style={styles.categorySearchInput}
                 placeholder={t('I_WANT_TO_LEARN_HOW_TO')}
+                placeholderTextColor={COLORS.cloudyGrey}
                 onChangeText={(text) => this.props.setSearchKeyword(text)}
                 onSubmitEditing={() => {
                   RootNavigation.navigate('SearchPage', {
@@ -81,7 +82,7 @@ class index extends Component {
           <Text style={styles.categoryDescription}>{category.description}</Text>
           <SectionHeader text={t('ARTICLES')} noIcon />
           {this.props.loading ? (
-            <ActivityIndicator size="small" color={COLORS.olivine} style={styles.loaderStyle} />
+            <ActivityIndicator size="small" color={COLORS.orange} style={styles.loaderStyle} />
           ) : (
             <View style={styles.wrapListContainer}>
               {this.props.articles.length > 0 ? (

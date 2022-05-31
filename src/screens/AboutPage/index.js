@@ -1,18 +1,15 @@
-import React, {Component} from 'react';
-import {ScrollView, View, ActivityIndicator, Dimensions} from 'react-native';
+import React, { Component } from 'react';
+import { ScrollView, Dimensions } from 'react-native';
 
 // packages
-import {connect} from 'react-redux';
-import {ms, mvs} from 'react-native-size-matters';
+import { connect } from 'react-redux';
 import HTML from 'react-native-render-html';
 
 // theme
-import {COLORS} from '../../theme/color';
-import {styles, tagsStyles} from './style';
+import { tagsStyles } from './style';
 
 // actions
-import {getAboutScreenData} from './actions';
-import {fontSize} from '../../theme/fontSize';
+import { getAboutScreenData } from './actions';
 import Loader from '../../components/Loader';
 
 const window = Dimensions.get('window');
@@ -23,30 +20,26 @@ class index extends Component {
   }
 
   render() {
-    console.log('this.props', this.props);
-
-    return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <View>
-          {this.props.loadingScreen ? (
-            <Loader />
-          ) : (
-            <HTML
-              contentWidth={window.width}
-              source={{html: this.props.data.aboutUs}}
-              tagsStyles={tagsStyles}
-            />
-          )}
-        </View>
+    return this.props.loadingScreen ? (
+      // <View style={{ flex: 1, alignSelf: 'center' }}>
+      <Loader />
+    ) : (
+      // </View>
+      <ScrollView>
+        <HTML
+          contentWidth={window.width}
+          source={{ html: this.props.data.aboutUs }}
+          tagsStyles={tagsStyles}
+        />
       </ScrollView>
     );
   }
 }
 
-const mapStateToProps = ({aboutPageRed}) => {
+const mapStateToProps = ({ aboutPageRed }) => {
   return {
     data: aboutPageRed.data,
-    loadingScreen: aboutPageRed.loading_screen,
+    loadingScreen: aboutPageRed.loading_screen
   };
 };
-export default connect(mapStateToProps, {getAboutScreenData})(index);
+export default connect(mapStateToProps, { getAboutScreenData })(index);

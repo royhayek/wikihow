@@ -1,24 +1,33 @@
 export const hideSearchBar = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: 'hide_search_bar',
+      type: 'hide_search_bar'
     });
   };
 };
 
-export const setSearchKeyword = keyword => {
-  return dispatch => {
+export const setSearchKeyword = (keyword) => {
+  return (dispatch) => {
     dispatch({
       type: 'set_search_keyword',
-      payload: keyword,
+      payload: keyword
     });
   };
 };
 
 export const showSearchBar = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: 'show_search_bar',
+      type: 'show_search_bar'
+    });
+  };
+};
+
+export const setCurrentLanguage = (lang) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'set_current_language',
+      payload: lang
     });
   };
 };

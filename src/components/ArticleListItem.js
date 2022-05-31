@@ -1,25 +1,27 @@
+import { t } from 'i18next';
 import React from 'react';
-import {Text, Image, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {ms, mvs} from 'react-native-size-matters';
+import { withTranslation } from 'react-i18next';
+import { Text, Image, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { ms, mvs } from 'react-native-size-matters';
 import * as RootNavigation from '../navigators/RootNavigation';
-import {COLORS} from '../theme/color';
-import {fontSize} from '../theme/fontSize';
-import {URI} from '../variables';
+import { COLORS } from '../theme/color';
+import { fontSize } from '../theme/fontSize';
+import { URI } from '../variables';
 
-const ArticleListItem = ({article}) => {
+const ArticleListItem = ({ t, article }) => {
   return (
     <View style={styles.mainContainer}>
       <TouchableOpacity
         style={styles.container}
         onPress={() => {
-          RootNavigation.navigate('ArticleDetails', {articleId: article.id});
+          RootNavigation.navigate('ArticleDetails', { articleId: article.id });
         }}>
         <Image
           style={styles.imageThumbnail}
-          source={{uri: URI + '/uploads/articles/' + article.image}}
+          source={{ uri: URI + '/uploads/articles/' + article.image }}
         />
         <View style={styles.informationText}>
-          <Text style={{fontSize: 11, color: COLORS.granite}}>How To</Text>
+          <Text style={{ fontSize: 11, color: COLORS.cloudyGrey }}>{t('HOW_TO')}</Text>
           <Text style={styles.titleText} numberOfLines={2}>
             {article.title}
           </Text>
@@ -31,7 +33,7 @@ const ArticleListItem = ({article}) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    width: '50%',
+    width: '50%'
   },
   container: {
     marginRight: ms(5),
@@ -39,25 +41,25 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gainsboro,
     borderWidth: ms(1),
     borderRadius: 5,
-    height: mvs(190),
+    height: mvs(190)
   },
   imageThumbnail: {
     justifyContent: 'center',
     alignItems: 'center',
     borderTopLeftRadius: 4,
     borderTopRightRadius: 4,
-    height: mvs(120),
+    height: mvs(120)
   },
   informationText: {
     paddingTop: mvs(10),
     paddingHorizontal: ms(10),
-    paddingBottom: mvs(5),
+    paddingBottom: mvs(5)
   },
   titleText: {
     fontSize: fontSize.size16,
-    color: COLORS.black,
-    fontWeight: 'bold',
-  },
+    color: COLORS.white,
+    fontWeight: 'bold'
+  }
 });
 
-export default ArticleListItem;
+export default withTranslation()(ArticleListItem);

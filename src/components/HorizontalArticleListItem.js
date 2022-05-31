@@ -5,10 +5,10 @@ import * as RootNavigation from '../navigators/RootNavigation';
 import { COLORS } from '../theme/color';
 import { fontSize } from '../theme/fontSize';
 import { URI } from '../variables';
-import TimeAgo from 'react-native-timeago';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { t } from 'i18next';
 import { withTranslation } from 'react-i18next';
+import TimeAgo from 'react-native-timeago';
 
 const HorizontalArticleListItem = ({ article }) => {
   return (
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: mvs(100),
     marginBottom: mvs(5),
-    backgroundColor: COLORS.white,
     borderColor: COLORS.lightGray,
     borderWidth: ms(1)
   },
@@ -64,17 +63,18 @@ const styles = StyleSheet.create({
   informationText: {
     flex: 1,
     paddingTop: mvs(10),
-    paddingBottom: mvs(5)
+    paddingBottom: mvs(5),
+    color: COLORS.white
   },
   titleText: {
     fontSize: fontSize.size16,
-    color: COLORS.forestGreen,
+    color: COLORS.white,
     paddingHorizontal: ms(5)
   },
   viewText: {
     marginLeft: ms(5),
     fontSize: fontSize.size13,
-    color: COLORS.black
+    color: COLORS.cloudyGrey
   }
 });
 

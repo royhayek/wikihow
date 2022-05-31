@@ -80,7 +80,7 @@ class NavigationBar extends Component {
 const styles = {
   containerStyle: {
     height: 64,
-    backgroundColor: COLORS.olivine2,
+    backgroundColor: COLORS.orange,
     alignItems: 'center',
     flexDirection: 'row',
     paddingTop: 10,

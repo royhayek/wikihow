@@ -64,7 +64,12 @@ class index extends Component {
         ) : (
           <ScrollView
             refreshControl={
-              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+                tintColor={COLORS.white}
+                progressBackgroundColor={COLORS.white}
+              />
             }>
             <View style={styles.container}>
               <View>
